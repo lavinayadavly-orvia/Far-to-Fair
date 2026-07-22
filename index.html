@@ -163,6 +163,10 @@
   @media(max-width:560px){.company-search{grid-template-columns:1fr}}
   .company-search select{width:100%;min-width:0;padding:12px 36px 12px 13px;border-radius:7px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:15px;font-weight:700;font-family:inherit}
   .company-search button{padding:12px 15px;border-radius:7px;border:1px solid var(--teal);background:var(--teal);color:#fff;font-size:13px;font-weight:760;cursor:pointer;font-family:inherit;white-space:nowrap}
+  .program-filter{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .program-filter:empty{display:none}
+  .program-filter button{border:1px solid var(--border);background:#fff;color:var(--text2);border-radius:6px;padding:9px 11px;font-size:12.5px;font-weight:780;cursor:pointer;font-family:inherit;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .program-filter button.active{border-color:var(--teal);background:#eaf5f7;color:var(--teal)}
   .answer-panel{background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(360px,.82fr) minmax(520px,1.18fr);overflow:hidden}
   @media(max-width:1080px){.answer-panel{grid-template-columns:1fr}}
   .dash-summary{display:grid;gap:12px;border-left:4px solid var(--teal);padding:24px 26px}
@@ -342,6 +346,8 @@
       </div>
     </div>
 
+    <div class="program-filter" id="dashboardProgramFilter" aria-label="Filter dashboard by program"></div>
+
     <div class="answer-panel">
       <div class="dash-summary" id="companySummary"></div>
       <div class="impact-strip" id="companyTiles"></div>
@@ -396,6 +402,8 @@
         <select id="drillCity" aria-label="Select city for patient drilldown"></select>
       </div>
     </div>
+
+    <div class="program-filter" id="drillProgramFilter" aria-label="Filter drilldown by program"></div>
 
     <div class="metric-ribbon" id="drillMetrics"></div>
 
@@ -721,6 +729,8 @@ let DASH_COMPANY="Novartis";
 let DRILL_COMPANY="Novartis";
 let DRILL_CITY="Mumbai";
 let DRILL_PATIENT=0;
+let DASH_PROGRAM="__all__";
+let DRILL_PROGRAM="__all__";
 
 const REGION_PROFILES={
   "Novartis":[["West",0.31],["North",0.27],["South",0.25],["East",0.17]],
@@ -890,6 +900,45 @@ function renderDashboardOptions(){
   list.innerHTML=companyNames().map(n=>`<option value="${n}">${n}</option>`).join('');
   list.value=DASH_COMPANY;
 }
+function programsForCompany(company){
+  return PROG.filter(p=>p.co===company);
+}
+function programSet(company,programId){
+  const programs=programsForCompany(company);
+  if(programId==="__all__")return programs;
+  const selected=programs.find(p=>p.id===programId);
+  return selected?[selected]:programs;
+}
+function validProgramId(company,programId){
+  return programId==="__all__"||programsForCompany(company).some(p=>p.id===programId);
+}
+function programScopeLabel(company,programId){
+  if(programId==="__all__")return `${company} portfolio`;
+  return programsForCompany(company).find(p=>p.id===programId)?.name||`${company} portfolio`;
+}
+function renderProgramFilter(elId,company,selected,onClickName){
+  const el=document.getElementById(elId);
+  if(!el)return;
+  const programs=programsForCompany(company);
+  if(programs.length<2){el.innerHTML="";return;}
+  el.innerHTML=[
+    `<button class="${selected==="__all__"?"active":""}" data-program="__all__">All programs</button>`,
+    ...programs.map(p=>`<button class="${selected===p.id?"active":""}" data-program="${p.id}" title="${p.name}">${p.name}</button>`)
+  ].join('');
+  el.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{
+    window[onClickName](btn.dataset.program);
+  }));
+}
+function setDashboardProgram(programId){
+  DASH_PROGRAM=programId;
+  DRILL_PROGRAM=programId;
+  renderDashboard();
+}
+function setDrillProgram(programId){
+  DRILL_PROGRAM=programId;
+  DRILL_PATIENT=0;
+  renderDrilldown();
+}
 function companyMaturityText(programs){
   const counts=programs.reduce((acc,p)=>{acc[p.maturity]=(acc[p.maturity]||0)+1;return acc;},{});
   const parts=[];
@@ -899,11 +948,19 @@ function companyMaturityText(programs){
   return parts.join(", ");
 }
 function renderDashboard(q){
-  DASH_COMPANY=matchCompany(q||document.getElementById('companySearch')?.value);
+  const nextCompany=matchCompany(q||document.getElementById('companySearch')?.value);
+  if(nextCompany!==DASH_COMPANY){
+    DASH_PROGRAM="__all__";
+    DRILL_PROGRAM="__all__";
+    DRILL_CITY=cityProfile(nextCompany)[0][0];
+    DRILL_PATIENT=0;
+  }
+  DASH_COMPANY=nextCompany;
   DRILL_COMPANY=DASH_COMPANY;
+  if(!validProgramId(DASH_COMPANY,DASH_PROGRAM))DASH_PROGRAM="__all__";
   const select=document.getElementById('companySearch');
   if(select)select.value=DASH_COMPANY;
-  const programs=PROG.filter(p=>p.co===DASH_COMPANY);
+  const programs=programSet(DASH_COMPANY,DASH_PROGRAM);
   const a=aggregatePrograms(programs,false);
   const b=aggregatePrograms(programs,true);
   const erosionPct=a.grossProfit>0?Math.max(0,Math.round((1-b.grossProfit/a.grossProfit)*100)):0;
@@ -914,7 +971,7 @@ function renderDashboard(q){
   const summaryTone=retainedRate>=20?"prot":retainedRate>=10?"erod":"comm";
   document.getElementById('companySummary').className=`dash-summary ${summaryTone}`;
   document.getElementById('companySummary').innerHTML=`
-    <div class="summary-title">${DASH_COMPANY} PAP readout</div>
+    <div class="summary-title">${programScopeLabel(DASH_COMPANY,DASH_PROGRAM)} readout</div>
     <h3>${impactLine}. Market pressure is ${pressure}.</h3>
     <p>The readout covers <b>${fN(a.N)}</b> enrolled patients across <b>${programs.length}</b> program${programs.length===1?"":"s"}. The impact case is strongest where persistence and affordability move together; it weakens where mature brands rely mainly on subsidy.</p>
     <div class="legend">
@@ -926,6 +983,7 @@ function renderDashboard(q){
     <div class="impact-tile g-afford"><div><div class="k">Affordability relief</div><div class="v">${money(a.oopRelieved)}</div></div><div class="s">${a.oopLeverage.toFixed(1)}x relief per support rupee.</div></div>
     <div class="impact-tile g-value"><div><div class="k">Market-tested value</div><div class="v">${money(b.grossProfit)}</div></div><div class="s">Defended value after pressure.</div></div>
     <div class="impact-tile g-risk"><div><div class="k">Risk haircut</div><div class="v">${erosionPct}%</div></div><div class="s">${protectedCount?protectedCount+" protected program(s).":"Limited protection."}</div></div>`;
+  renderProgramFilter('dashboardProgramFilter',DASH_COMPANY,DASH_PROGRAM,'setDashboardProgram');
   renderCompanyImpactChart(programs);
   renderCompanyRiskChart(a,b,programs);
   renderCompanyRegions(DASH_COMPANY,a);
@@ -980,8 +1038,8 @@ function companyNarrative(company,programs,a,b,erosionPct){
 /* ===== city and patient drilldown ===== */
 let cityImpactChart;
 function cityProfile(company){return CITY_PROFILES[company]||FALLBACK_CITIES;}
-function cityRows(company){
-  const programs=PROG.filter(p=>p.co===company);
+function cityRows(company,programId="__all__"){
+  const programs=programSet(company,programId);
   const a=aggregatePrograms(programs,false);
   return cityProfile(company).map(([city,share,conversion,friction,move])=>{
     const enrolled=Math.max(1,Math.round(a.N*share));
@@ -992,9 +1050,10 @@ function cityRows(company){
     return {city,share,conversion,friction,move,eligible,enrolled,retained,oopRelief,leakage};
   });
 }
-function patientRows(company,city){
-  const programs=PROG.filter(p=>p.co===company);
-  const cityRow=cityRows(company).find(r=>r.city===city)||cityRows(company)[0];
+function patientRows(company,city,programId="__all__"){
+  const programs=programSet(company,programId);
+  const citySet=cityRows(company,programId);
+  const cityRow=citySet.find(r=>r.city===city)||citySet[0];
   const seed=city.length+company.length;
   return [0,1,2,3,4].map(i=>{
     const p=programs[i%programs.length];
@@ -1019,7 +1078,7 @@ function initDrilldown(){
   const company=document.getElementById('drillCompany');
   const city=document.getElementById('drillCity');
   company.innerHTML=companyNames().map(n=>`<option value="${n}">${n}</option>`).join('');
-  company.addEventListener('change',e=>{DRILL_COMPANY=e.target.value;DRILL_CITY=cityProfile(DRILL_COMPANY)[0][0];DRILL_PATIENT=0;renderDrilldown();});
+  company.addEventListener('change',e=>{DRILL_COMPANY=e.target.value;DRILL_PROGRAM="__all__";DRILL_CITY=cityProfile(DRILL_COMPANY)[0][0];DRILL_PATIENT=0;renderDrilldown();});
   city.addEventListener('change',e=>{DRILL_CITY=e.target.value;DRILL_PATIENT=0;renderDrilldown();});
 }
 function renderDrilldown(){
@@ -1027,20 +1086,22 @@ function renderDrilldown(){
   const citySel=document.getElementById('drillCity');
   if(!companySel||!citySel)return;
   if(!companyNames().includes(DRILL_COMPANY))DRILL_COMPANY=DASH_COMPANY;
+  if(!validProgramId(DRILL_COMPANY,DRILL_PROGRAM))DRILL_PROGRAM="__all__";
   companySel.innerHTML=companyNames().map(n=>`<option value="${n}">${n}</option>`).join('');
   const profile=cityProfile(DRILL_COMPANY);
   if(!profile.some(c=>c[0]===DRILL_CITY))DRILL_CITY=profile[0][0];
   companySel.value=DRILL_COMPANY;
   citySel.innerHTML=profile.map(([city])=>`<option value="${city}">${city}</option>`).join('');
   citySel.value=DRILL_CITY;
-  const rows=cityRows(DRILL_COMPANY);
+  renderProgramFilter('drillProgramFilter',DRILL_COMPANY,DRILL_PROGRAM,'setDrillProgram');
+  const rows=cityRows(DRILL_COMPANY,DRILL_PROGRAM);
   const currentCity=rows.find(r=>r.city===DRILL_CITY)||rows[0];
-  const patients=patientRows(DRILL_COMPANY,currentCity.city);
+  const patients=patientRows(DRILL_COMPANY,currentCity.city,DRILL_PROGRAM);
   if(DRILL_PATIENT>=patients.length)DRILL_PATIENT=0;
   const conv=currentCity.eligible?currentCity.enrolled/currentCity.eligible*100:0;
   const retainedRate=currentCity.enrolled?currentCity.retained/currentCity.enrolled*100:0;
   document.getElementById('drillMetrics').innerHTML=`
-    <div class="metric-cell"><div class="k">Eligible pool</div><div class="v">${fN(currentCity.eligible)}</div><div class="s">${currentCity.city}</div></div>
+    <div class="metric-cell"><div class="k">Eligible pool</div><div class="v">${fN(currentCity.eligible)}</div><div class="s">${currentCity.city} · ${programScopeLabel(DRILL_COMPANY,DRILL_PROGRAM)}</div></div>
     <div class="metric-cell"><div class="k">Enrolled</div><div class="v">${fN(currentCity.enrolled)}</div><div class="s">${conv.toFixed(0)}% conversion</div></div>
     <div class="metric-cell"><div class="k">Retained</div><div class="v">${fN(currentCity.retained)}</div><div class="s">${retainedRate.toFixed(1)}% of enrolled</div></div>
     <div class="metric-cell"><div class="k">OOP relief</div><div class="v">${money(currentCity.oopRelief)}</div><div class="s">patient affordability</div></div>
