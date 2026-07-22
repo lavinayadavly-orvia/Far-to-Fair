@@ -692,8 +692,8 @@ const DEFAULTS=[
  {id:"lungs",co:"AstraZeneca",name:"LuNGS Alliance (free NGS)",ta:"Oncology (Dx)",maturity:"protected",policy:0.5,enrolled:8000,monthlyPrice:70000,progCostPerPt:8000,persistWith:15,persistWithout:5,freeMonths:0,oopRed:35,wouldAbandon:55,attribution:0.60,margin:40,lyFactor:0.5},
  {id:"pfizerpap",co:"Pfizer",name:"Pfizer PAP India (buy-and-benefit)",ta:"Oncology",maturity:"protected",policy:0.4,enrolled:12000,monthlyPrice:150000,progCostPerPt:50000,persistWith:16,persistWithout:4,freeMonths:6,oopRed:55,wouldAbandon:65,attribution:0.70,margin:82,lyFactor:0.5},
  {id:"saath7",co:"Sanofi",name:"Saath7 diabetes support",ta:"Diabetes",maturity:"commoditized",policy:0.6,enrolled:100000,monthlyPrice:2000,progCostPerPt:1200,persistWith:24,persistWithout:12,freeMonths:0,oopRed:15,wouldAbandon:40,attribution:0.55,margin:65,lyFactor:0.2},
- {id:"incap",co:"Sanofi",name:"INCAP rare-disease ERT",ta:"Rare disease",maturity:"protected",policy:0.3,enrolled:170,monthlyPrice:800000,progCostPerPt:9600000,persistWith:36,persistWithout:2,freeMonths:36,oopRed:100,wouldAbandon:85,attribution:0.90,margin:60,lyFactor:0.7},
- {id:"disha",co:"Sanofi",name:"Disha free rare-disease testing",ta:"Rare disease (Dx)",maturity:"protected",policy:0.3,enrolled:6000,monthlyPrice:600000,progCostPerPt:5000,persistWith:24,persistWithout:6,freeMonths:0,oopRed:30,wouldAbandon:70,attribution:0.60,margin:20,lyFactor:0.4},
+ {id:"incap",co:"Sanofi",name:"InCAP rare-disease charitable access",ta:"Rare disease",maturity:"protected",policy:0.3,enrolled:115,monthlyPrice:800000,progCostPerPt:9600000,persistWith:36,persistWithout:2,freeMonths:36,oopRed:100,wouldAbandon:85,attribution:0.90,margin:60,lyFactor:0.7},
+ {id:"disha",co:"Sanofi",name:"Rare-disease diagnostic support",ta:"Rare disease (Dx)",maturity:"protected",policy:0.3,enrolled:1000,monthlyPrice:12000,progCostPerPt:12000,persistWith:1,persistWithout:0,freeMonths:0,oopRed:100,wouldAbandon:35,attribution:0.45,margin:0,lyFactor:0.08},
  {id:"bedaquiline",co:"Johnson & Johnson",name:"Bedaquiline MDR-TB access",ta:"Tuberculosis",maturity:"protected",policy:0.7,enrolled:12000,monthlyPrice:6000,progCostPerPt:28000,persistWith:6,persistWithout:2,freeMonths:6,oopRed:100,wouldAbandon:50,attribution:0.75,margin:50,lyFactor:0.8},
  {id:"sparsh",co:"Dr. Reddy's",name:"Sparsh chemotherapy assistance",ta:"Oncology",maturity:"eroding",policy:0.5,enrolled:6000,monthlyPrice:100000,progCostPerPt:40000,persistWith:15,persistWithout:5,freeMonths:9,oopRed:50,wouldAbandon:60,attribution:0.65,margin:70,lyFactor:0.4},
  {id:"cipla",co:"Cipla",name:"Cipla Palliative Care",ta:"Palliative",maturity:"commoditized",policy:0.4,enrolled:26000,monthlyPrice:0,progCostPerPt:15000,persistWith:9,persistWithout:3,freeMonths:0,oopRed:100,wouldAbandon:50,attribution:0.80,margin:0,lyFactor:0.15},
@@ -735,7 +735,7 @@ const CITY_PROFILES={
   "Roche":[["Mumbai",.22,.80,.16,"protect follow-up after subsidy approval"],["Delhi NCR",.18,.72,.22,"reduce income-proof friction"],["Bengaluru",.16,.78,.17,"pull diagnostics into the first visit"],["Chennai",.15,.75,.20,"watch donation cliff risk"],["Hyderabad",.13,.70,.24,"tighten refill coordination"],["Kolkata",.09,.58,.36,"increase referral capture"],["Patna",.07,.46,.47,"add assisted enrolment"]],
   "Pfizer":[["Delhi NCR",.22,.74,.21,"close residual co-pay abandonment"],["Mumbai",.20,.79,.17,"protect refill adherence"],["Bengaluru",.16,.77,.18,"use navigator follow-up"],["Chennai",.14,.72,.22,"front-load benefit approval"],["Hyderabad",.12,.68,.26,"monitor dose-gap risk"],["Kolkata",.09,.57,.38,"recover missing referrals"],["Jaipur",.07,.52,.42,"simplify paperwork"]],
   "AstraZeneca":[["Bengaluru",.20,.84,.12,"convert tested patients faster"],["Mumbai",.18,.80,.15,"speed report-to-therapy handoff"],["Hyderabad",.17,.78,.17,"protect diagnostic follow-through"],["Chennai",.15,.76,.18,"tighten oncology network capture"],["Delhi NCR",.13,.69,.25,"reduce referral leakage"],["Kolkata",.09,.60,.34,"support sample logistics"],["Patna",.08,.50,.44,"extend access beyond metro centres"]],
-  "Sanofi":[["Mumbai",.20,.75,.20,"prioritize high-risk refill gaps"],["Bengaluru",.17,.79,.16,"keep digital adherence active"],["Delhi NCR",.16,.70,.25,"recover drop-offs after counselling"],["Hyderabad",.14,.73,.21,"focus rare-disease handoff"],["Chennai",.12,.76,.19,"protect home-delivery continuity"],["Kolkata",.11,.59,.36,"add paperwork support"],["Lucknow",.10,.53,.41,"expand navigator coverage"]]
+  "Sanofi":[["Mumbai",.20,.75,.20,"prioritize high-risk insulin refill gaps"],["Bengaluru",.17,.79,.16,"keep diabetes adherence support active"],["Delhi NCR",.16,.70,.25,"recover drop-offs after counselling"],["Hyderabad",.14,.73,.21,"route rare-disease suspects to the right centre without inflating cohort counts"],["Chennai",.12,.76,.19,"protect home-delivery continuity"],["Kolkata",.11,.59,.36,"add paperwork support"],["Lucknow",.10,.53,.41,"expand navigator coverage"]]
 };
 const FALLBACK_CITIES=[["Mumbai",.22,.76,.19,"tighten onboarding"],["Delhi NCR",.18,.70,.25,"recover referrals"],["Bengaluru",.16,.78,.17,"protect persistence"],["Hyderabad",.14,.72,.22,"coordinate refills"],["Chennai",.12,.73,.21,"speed approval"],["Kolkata",.10,.59,.36,"reduce paperwork"],["Patna",.08,.49,.45,"add field navigation"]];
 
@@ -1456,7 +1456,7 @@ const anchors=[
  ["Roche Blue Tree","40,000+ patients benefited across India; 5,000+ doctors; 4,000+ diagnostic tests","Roche India"],
  ["Roche cancer access","7,000+ low-income cancer patients supported by end-2020; 40% adherence-rate increase reported","Roche global story"],
  ["Novartis GIPAP / CMLPath","GIPAP ~75,000 historical global patients; CMLPath nearly 34,000 current global patients across ~70 countries","Novartis / Max Foundation"],
- ["Sanofi Saath7","100,000 patients enrolled every year; 5,000+ healthcare professionals; 45-50+ cities","Sanofi India"],
+ ["Sanofi India programs","Saath7 supports ~100,000 diabetes patients annually; InCAP has supported 100+ rare-disease patients since 1999; rare-disease diagnostics enabled 10,000+ tests over a decade","Sanofi India"],
  ["Pfizer PAP India","10+ patient access programs; PAP India app supports enrolment for eligible patients","Pfizer India"],
  ["Cipla Palliative Care","26,000+ patients supported by Cipla Palliative Care and Training Centre as of 31 Mar 2026","Cipla Palliative Care"],
  ["Dr. Reddy's Sparsh","6,000+ economically challenged chemotherapy patients benefited","Dr. Reddy's"],
@@ -1504,6 +1504,7 @@ const sources=[
  ["Novartis and Max Foundation CMLPath to Care","https://www.novartis.com/news/media-releases/novartis-and-max-foundation-transform-pioneering-cancer-access-program-people-lower-income-countries"],
  ["Pfizer PAP India app","https://www.pfizer.co.in/about-us/patient-centricity/access-assistance-made-easy-via-pfizer-pap-india-app"],
  ["Sanofi Saath7 patient support","https://www.sanofi.com/en/india/patient-support"],
+ ["Sanofi India rare diseases / InCAP / diagnostics","https://www.sanofi.com/en/india/about-us/chasing-the-miracles-of-science/fighting-rare-diseases"],
  ["Cipla Palliative Care","https://www.ciplapalliativecare.org/"],
  ["Dr. Reddy's patient programs","https://www.drreddys.com/for-patients"],
  ["Lupin Integrated Report FY26","https://www.lupin.com/integrated-report-2026/business-review.html"],
