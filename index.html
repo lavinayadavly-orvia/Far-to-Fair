@@ -24,10 +24,10 @@
 </script>
 <style>
   :root{
-    --page:#f5f7f8;--panel:#ffffff;--surface:#f9fbfc;
-    --text:#172026;--text2:#42505a;--muted:#75818a;--grid:#e5eaed;--baseline:#c7d0d5;--border:rgba(23,32,38,0.10);
-    --s1:#2f6fed;--s2:#c65f35;--s3:#198754;--s4:#b9830b;--s5:#b85b7d;--s6:#2c7a47;--s7:#5b5fc7;--s8:#c43d3d;
-    --good:#168a45;--warning:#b9830b;--serious:#c65f35;--critical:#c43d3d;--teal:#176b87;--ink:#19343d;
+    --page:#ffffff;--panel:#ffffff;--surface:#fbf7fb;
+    --text:#172026;--text2:#42505a;--muted:#75818a;--grid:#eadfe8;--baseline:#d9cbd7;--border:rgba(23,32,38,0.10);
+    --s1:#0e8a8a;--s2:#f47c2c;--s3:#d83f87;--s4:#f5b25b;--s5:#f3a6c8;--s6:#75c8bf;--s7:#f7d7e7;--s8:#b92870;
+    --good:#0e8a8a;--warning:#f47c2c;--serious:#d83f87;--critical:#b92870;--teal:#0e8a8a;--ink:#12383c;
     --shadow:0 1px 2px rgba(11,11,11,.035),0 10px 28px rgba(11,11,11,.045);--radius:8px;
   }
   *{box-sizing:border-box}html,body{margin:0;padding:0}
@@ -39,7 +39,7 @@
   header.top .wrap{height:52px;display:flex;align-items:center;gap:16px}
   .brand{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:820;letter-spacing:.02em;color:var(--text)}
   .brand-mark{width:28px;height:28px;display:block}
-  nav.tabs{position:sticky;top:0;z-index:40;background:rgba(252,252,251,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+  nav.tabs{position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
   nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto}
   .tab{padding:17px 22px;font-size:14.5px;font-weight:650;color:var(--text2);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent}
   .tab:hover{color:var(--text)}.tab.active{color:var(--teal);border-bottom-color:var(--teal)}
@@ -72,7 +72,7 @@
   @media(max-width:900px){.lenses{grid-template-columns:1fr}}
   .lens h4{margin:0 0 8px;font-size:15px;text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;gap:9px}
   .lens .sub{font-size:13.5px;color:var(--muted);margin:0 0 24px;line-height:1.4}
-  .lens.board h4{color:#1c5cab}.lens.patient h4{color:#0b7a4a}.lens.ops h4{color:#b8492a}
+  .lens.board h4{color:#0e8a8a}.lens.patient h4{color:#0e8a8a}.lens.ops h4{color:#f47c2c}
   .lens .hero{font-size:46px;font-weight:780;letter-spacing:-.02em;line-height:1.0}
   .lens .herolbl{font-size:14px;color:var(--text2);margin:10px 0 24px}
   .stat{display:flex;justify-content:space-between;align-items:baseline;padding:12px 0;border-bottom:1px dashed rgba(0,0,0,.07)}
@@ -82,14 +82,14 @@
 
   .prongcompare{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:16px}
   .prongcol{padding:15px 17px}
-  .prongcol.a{background:#eef8f2}.prongcol.b{background:#eef3fb;border-left:1px solid var(--border)}
+  .prongcol.a{background:#eaf8f6}.prongcol.b{background:#fff0e7;border-left:1px solid var(--border)}
   .prongcol h5{margin:0 0 3px;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
-  .prongcol.a h5{color:#0b7a4a}.prongcol.b h5{color:#1c5cab}
+  .prongcol.a h5{color:#0e8a8a}.prongcol.b h5{color:#b85f13}
   .prongcol .pdesc{font-size:11.5px;color:var(--muted);margin:0 0 10px}
   .prongrow{display:flex;justify-content:space-between;padding:4px 0;font-size:12.5px}
   .prongrow .pv{font-weight:700;font-variant-numeric:tabular-nums}
   .delta{font-size:11px;font-weight:700;padding:1px 6px;border-radius:5px;margin-left:6px}
-  .delta.dn{background:#fdecec;color:#b52d2d}.delta.up{background:#e7f6ec;color:#0b7a4a}
+  .delta.dn{background:#fdeaf4;color:#b92870}.delta.up{background:#eaf8f6;color:#0e8a8a}
 
   .callout{background:var(--ink);color:#eaf6f8;border-radius:12px;padding:24px 28px;font-size:16px;line-height:1.6;margin-top:26px}
   .callout b{color:#fff}
@@ -105,7 +105,7 @@
   .verdict .cl{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:750}
   .verdict .cvv{font-size:24px;font-weight:820;margin-top:6px}
   .badge{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:6px;margin-left:6px}
-  .badge.prot{background:#e7f6ec;color:#0b7a4a}.badge.erod{background:#fef3e0;color:#9a6a00}.badge.comm{background:#fdecec;color:#b52d2d}
+  .badge.prot{background:#eaf8f6;color:#0e8a8a}.badge.erod{background:#fff0e7;color:#b85f13}.badge.comm{background:#fdeaf4;color:#b92870}
 
   .chartbox{position:relative;height:390px}
   .chartbox.sm{height:320px}
@@ -113,7 +113,7 @@
   th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--grid)}
   th{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:700}
   td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
-  tbody tr:hover{background:#f5f8f8}
+  tbody tr:hover{background:#fbf7fb}
   input.cell{width:88px;padding:4px 6px;border:1px solid var(--grid);border-radius:6px;font-size:12px;text-align:right;font-variant-numeric:tabular-nums;font-family:inherit}
   input.cell:focus{outline:none;border-color:var(--teal)}
   .workspace{padding-left:48px;padding-right:48px}
@@ -125,8 +125,8 @@
   .data-card thead th{position:sticky;top:0;background:var(--panel);z-index:3}
   .data-card th:first-child,.data-card td:first-child{position:sticky;left:0;background:var(--panel);z-index:2;min-width:180px;max-width:220px}
   .data-card thead th:first-child{z-index:5}
-  .data-card tbody tr:hover td{background:#f5f8f8}
-  .data-card tbody tr:hover td:first-child{background:#f5f8f8}
+  .data-card tbody tr:hover td{background:#fbf7fb}
+  .data-card tbody tr:hover td:first-child{background:#fbf7fb}
   .data-card th,.data-card td{padding:10px 12px}
   .data-card input.cell{width:100%;min-width:88px}
   .data-card td.num,.data-card th.num{min-width:106px}
@@ -135,7 +135,7 @@
   .btn.ghost{background:var(--panel);color:var(--teal)}
   .btn:hover{opacity:.92}
   .uploadzone{border:2px dashed var(--baseline);border-radius:12px;padding:34px;text-align:center;color:var(--text2);font-size:14px;background:var(--surface);line-height:1.5}
-  .uploadzone.drag{border-color:var(--teal);background:#eef8f2}
+  .uploadzone.drag{border-color:var(--teal);background:#eaf8f6}
   .lever{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center;padding:16px 0;border-bottom:1px solid var(--grid)}
   .lever:last-child{border-bottom:none}
   .lever .lt{font-size:15px;font-weight:700}.lever .ld{font-size:13px;color:var(--muted);margin-top:3px}
@@ -166,7 +166,7 @@
   .program-filter{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .program-filter:empty{display:none}
   .program-filter button{border:1px solid var(--border);background:#fff;color:var(--text2);border-radius:6px;padding:9px 11px;font-size:12.5px;font-weight:780;cursor:pointer;font-family:inherit;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .program-filter button.active{border-color:var(--teal);background:#eaf5f7;color:var(--teal)}
+  .program-filter button.active{border-color:var(--teal);background:#eaf8f6;color:var(--teal)}
   .answer-panel{background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(360px,.82fr) minmax(520px,1.18fr);overflow:hidden}
   @media(max-width:1080px){.answer-panel{grid-template-columns:1fr}}
   .dash-summary{display:grid;gap:12px;border-left:4px solid var(--teal);padding:24px 26px}
@@ -185,10 +185,10 @@
   .impact-tile .k{font-size:11px;text-transform:uppercase;letter-spacing:.11em;font-weight:800;color:var(--muted)}
   .impact-tile .v{font-size:31px;line-height:1;font-weight:820;letter-spacing:0;margin-top:14px;color:var(--text)}
   .impact-tile .s{font-size:12.5px;line-height:1.4;color:var(--text2);margin-top:10px;max-width:280px}
-  .g-access{border-top-color:#0b7a4a}
-  .g-afford{border-top-color:#2a78d6}
-  .g-value{border-top-color:#9a6a00}
-  .g-risk{border-top-color:#b52d2d}
+  .g-access{border-top-color:#0e8a8a}
+  .g-afford{border-top-color:#f47c2c}
+  .g-value{border-top-color:#d83f87}
+  .g-risk{border-top-color:#b92870}
   .dash-grid{display:grid;grid-template-columns:1.18fr .82fr;gap:18px;margin:0}
   @media(max-width:1100px){.dash-grid{grid-template-columns:1fr}}
   .region-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
@@ -196,7 +196,7 @@
   .region-card{background:var(--surface);border:1px solid var(--grid);border-radius:8px;padding:15px}
   .region-card .rname{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:800}
   .region-card .rval{font-size:28px;font-weight:850;margin-top:6px}
-  .region-card .rbar{height:8px;background:#e6e4dc;border-radius:999px;margin-top:12px;overflow:hidden}
+  .region-card .rbar{height:8px;background:#f7d7e7;border-radius:999px;margin-top:12px;overflow:hidden}
   .region-card .rbar span{display:block;height:100%;background:var(--teal);border-radius:999px}
   .portfolio-list{display:grid;gap:10px}
   .portfolio-row{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--grid)}
@@ -206,10 +206,10 @@
   .portfolio-row .pv{font-size:18px;font-weight:850;color:var(--teal)}
   .note{font-size:11.5px;color:var(--muted)}
   .disclaimer{font-size:11.5px;color:var(--muted);margin-top:22px;border-top:1px solid var(--grid);padding-top:13px}
-  .pill2{font-size:11px;padding:2px 8px;border-radius:6px;background:#eef3f4;color:#33555c;font-weight:600}
-  .flag{font-size:12px;color:#9a3f24;background:#fdf1ec;border:1px solid #f6d3c2;border-radius:9px;padding:10px 13px;margin-top:10px}
-  .data-warning{display:flex;align-items:flex-start;gap:12px;background:#fff7e6;border:1px solid #f3d18f;color:#715009;border-radius:12px;padding:16px 18px;margin:0 0 26px;font-size:14.5px;line-height:1.45}
-  .data-warning b{color:#4a3500}
+  .pill2{font-size:11px;padding:2px 8px;border-radius:6px;background:#eaf8f6;color:#12383c;font-weight:600}
+  .flag{font-size:12px;color:#b92870;background:#fdeaf4;border:1px solid #f3a6c8;border-radius:9px;padding:10px 13px;margin-top:10px}
+  .data-warning{display:flex;align-items:flex-start;gap:12px;background:#fff0e7;border:1px solid #f5b25b;color:#b85f13;border-radius:12px;padding:16px 18px;margin:0 0 26px;font-size:14.5px;line-height:1.45}
+  .data-warning b{color:#8d4708}
   .next-read{display:grid;grid-template-columns:minmax(320px,1fr) auto;gap:18px;align-items:center;background:#fff;color:var(--text2);border-top:1px solid var(--grid);border-bottom:1px solid var(--grid);padding:16px 0;font-size:14.5px}
   .next-read b{color:var(--text)}
   .next-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
@@ -238,9 +238,9 @@
   .city-table-wrap,.patient-table-wrap{overflow:auto;background:#fff;border-top:1px solid var(--grid);border-bottom:1px solid var(--grid)}
   .city-table-wrap table,.patient-table-wrap table{min-width:780px}
   .patient-table-wrap tbody tr{cursor:pointer}
-  .patient-table-wrap tbody tr.active{background:#eef8f2}
+  .patient-table-wrap tbody tr.active{background:#eaf8f6}
   .risk-chip{display:inline-flex;align-items:center;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:800;white-space:nowrap}
-  .risk-chip.high{background:#fdecec;color:#a32727}.risk-chip.medium{background:#fff4df;color:#8a5e00}.risk-chip.low{background:#e7f6ec;color:#0b7a4a}
+  .risk-chip.high{background:#fdeaf4;color:#b92870}.risk-chip.medium{background:#fff0e7;color:#b85f13}.risk-chip.low{background:#eaf8f6;color:#0e8a8a}
   .city-rec{display:grid;gap:16px;align-content:start;height:100%}
   .city-rec .big{font-size:34px;font-weight:850;line-height:1;color:var(--teal)}
   .city-rec p{margin:0;color:var(--text2);font-size:14px;line-height:1.55}
@@ -254,7 +254,7 @@
   .journey-step:last-child{border-right:0}
   .journey-step b{display:block;font-size:13px;margin-bottom:5px;color:var(--text)}
   .journey-step span{display:block;font-size:12px;color:var(--text2);line-height:1.4}
-  .microbar{height:8px;background:#e6e4dc;border-radius:999px;overflow:hidden;margin-top:8px}
+  .microbar{height:8px;background:#f7d7e7;border-radius:999px;overflow:hidden;margin-top:8px}
   .microbar span{display:block;height:100%;background:var(--teal);border-radius:999px}
   .about-hero{display:grid;grid-template-columns:minmax(380px,.82fr) minmax(420px,1.18fr);gap:56px;align-items:end;padding:18px 0 42px;border-bottom:1px solid var(--grid)}
   @media(max-width:980px){.about-hero{grid-template-columns:1fr;gap:24px}}
@@ -285,7 +285,7 @@
   .waterfall-card{background:#fff;border:1px solid rgba(23,32,38,.08);border-radius:6px;padding:24px 26px;overflow:hidden;box-shadow:0 1px 2px rgba(11,11,11,.025)}
   .waterfall-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end;margin-bottom:6px}
   .waterfall-head b{font-size:16px;letter-spacing:-.01em}
-  .waterfall-head span{font-size:28px;line-height:1;font-weight:850;color:#1f8f62;white-space:nowrap}
+  .waterfall-head span{font-size:28px;line-height:1;font-weight:850;color:#0e8a8a;white-space:nowrap}
   .waterfall-sub{font-size:12px;color:var(--muted);margin:0 0 18px;line-height:1.45}
   .waterfall-chart{position:relative;width:100%;min-width:0;height:390px}
   .leak-explain{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px;padding-top:16px;border-top:1px solid var(--grid)}
@@ -304,8 +304,8 @@
   @media(max-width:760px){.about-actions{justify-content:flex-start}}
   .info{position:relative;display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;margin-left:5px;border:1px solid var(--baseline);border-radius:50%;font-size:10px;font-weight:800;line-height:1;color:var(--teal);background:#fff;cursor:help;vertical-align:middle;text-transform:none;letter-spacing:0}
   .info::before{content:"i"}
-  .info:focus{outline:2px solid #9bd7e2;outline-offset:2px}
-  .tip-popover{position:fixed;max-width:300px;background:#102a33;color:#fff;border-radius:8px;padding:8px 10px;font-size:11.5px;font-weight:500;line-height:1.35;text-align:left;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:9999;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .1s ease,transform .1s ease}
+  .info:focus{outline:2px solid #75c8bf;outline-offset:2px}
+  .tip-popover{position:fixed;max-width:300px;background:#12383c;color:#fff;border-radius:8px;padding:8px 10px;font-size:11.5px;font-weight:500;line-height:1.35;text-align:left;box-shadow:0 8px 24px rgba(0,0,0,.18);z-index:9999;pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .1s ease,transform .1s ease}
   .tip-popover.show{opacity:1;transform:translateY(0)}
   .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;font-size:12px;color:var(--text2)}
   .legend .lg{display:flex;align-items:center;gap:6px}.legend .dot{width:11px;height:11px;border-radius:3px}
@@ -1008,8 +1008,8 @@ function renderDashboard(q){
     <h3>${impactLine}. Market pressure is ${pressure}.</h3>
     <p>The readout covers <b>${fN(a.N)}</b> enrolled patients across <b>${programs.length}</b> program${programs.length===1?"":"s"}. The impact case is strongest where persistence and affordability move together; it weakens where mature brands rely mainly on subsidy.</p>
     <div class="legend">
-      <div class="lg"><span class="dot" style="background:#1baf7a"></span>${companyMaturityText(programs)}</div>
-      <div class="lg"><span class="dot" style="background:#e34948"></span>${erosionPct}% value haircut in market view</div>
+      <div class="lg"><span class="dot" style="background:#0e8a8a"></span>${companyMaturityText(programs)}</div>
+      <div class="lg"><span class="dot" style="background:#d83f87"></span>${erosionPct}% value haircut in market view</div>
     </div>`;
   document.getElementById('companyTiles').innerHTML=`
     <div class="impact-tile g-access"><div><div class="k">Patients retained</div><div class="v">${fN(a.retained)}</div></div><div class="s">${retainedRate.toFixed(1)}% above baseline.</div></div>
@@ -1029,20 +1029,20 @@ function renderCompanyImpactChart(programs){
   const ctx=document.getElementById('companyImpactChart');
   if(companyImpactChart)companyImpactChart.destroy();
   companyImpactChart=new Chart(ctx,{type:'bar',data:{labels:rows.map(x=>x.p.name),datasets:[
-    {label:'Patients retained',yAxisID:'patients',data:rows.map(x=>x.r.retained),backgroundColor:'#198754',borderRadius:7,barPercentage:.72,categoryPercentage:.7},
-    {label:'OOP relief',yAxisID:'relief',data:rows.map(x=>cr(x.r.oopRelieved)),backgroundColor:'#2f6fed',borderRadius:7,barPercentage:.72,categoryPercentage:.7}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:12,font:{size:12},color:'#52514e'}},tooltip:{callbacks:{label:c=>c.datasetIndex===0?`Patients retained: ${fN(c.raw)}`:`OOP relief: ₹${f1(c.raw)} Cr`}}},scales:{
-    patients:{type:'linear',position:'left',beginAtZero:true,title:{display:true,text:'Patients retained',color:'#0b7a4a',font:{size:11,weight:'600'}},ticks:{color:'#0b7a4a',font:{size:11},callback:v=>fN(v)},grid:{color:'#e1e0d9'}},
-    relief:{type:'linear',position:'right',beginAtZero:true,title:{display:true,text:'OOP relief (₹Cr)',color:'#2a78d6',font:{size:11,weight:'600'}},ticks:{color:'#2a78d6',font:{size:11},callback:v=>'₹'+f1(v)},grid:{drawOnChartArea:false}},
-    x:{ticks:{color:'#52514e',font:{size:11}},grid:{display:false}}
+    {label:'Patients retained',yAxisID:'patients',data:rows.map(x=>x.r.retained),backgroundColor:'#0e8a8a',borderRadius:7,barPercentage:.72,categoryPercentage:.7},
+    {label:'OOP relief',yAxisID:'relief',data:rows.map(x=>cr(x.r.oopRelieved)),backgroundColor:'#f47c2c',borderRadius:7,barPercentage:.72,categoryPercentage:.7}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:12,font:{size:12},color:'#42505a'}},tooltip:{callbacks:{label:c=>c.datasetIndex===0?`Patients retained: ${fN(c.raw)}`:`OOP relief: ₹${f1(c.raw)} Cr`}}},scales:{
+    patients:{type:'linear',position:'left',beginAtZero:true,title:{display:true,text:'Patients retained',color:'#0e8a8a',font:{size:11,weight:'600'}},ticks:{color:'#0e8a8a',font:{size:11},callback:v=>fN(v)},grid:{color:'#eadfe8'}},
+    relief:{type:'linear',position:'right',beginAtZero:true,title:{display:true,text:'OOP relief (₹Cr)',color:'#f47c2c',font:{size:11,weight:'600'}},ticks:{color:'#f47c2c',font:{size:11},callback:v=>'₹'+f1(v)},grid:{drawOnChartArea:false}},
+    x:{ticks:{color:'#42505a',font:{size:11}},grid:{display:false}}
   }}});
 }
 function renderCompanyRiskChart(a,b,programs){
   const ctx=document.getElementById('companyRiskChart');
   if(companyRiskChart)companyRiskChart.destroy();
   companyRiskChart=new Chart(ctx,{type:'bar',data:{labels:["Before market pressure","After market pressure"],datasets:[
-    {label:'Revenue defended',data:[cr(a.grossProfit),cr(b.grossProfit)],backgroundColor:['#198754','#2f6fed'],borderRadius:7,barPercentage:.62,categoryPercentage:.72}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`Revenue defended: ${money(c.raw*1e7)}`}}},scales:{y:{beginAtZero:true,title:{display:true,text:'Revenue defended (₹Cr)',color:'#52514e',font:{size:11,weight:'600'}},ticks:{color:'#898781',font:{size:11},callback:v=>'₹'+f1(v)},grid:{color:'#e1e0d9'}},x:{ticks:{color:'#52514e',font:{size:11}},grid:{display:false}}}}});
+    {label:'Revenue defended',data:[cr(a.grossProfit),cr(b.grossProfit)],backgroundColor:['#f47c2c','#d83f87'],borderRadius:7,barPercentage:.62,categoryPercentage:.72}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`Revenue defended: ${money(c.raw*1e7)}`}}},scales:{y:{beginAtZero:true,title:{display:true,text:'Revenue defended (₹Cr)',color:'#42505a',font:{size:11,weight:'600'}},ticks:{color:'#75818a',font:{size:11},callback:v=>'₹'+f1(v)},grid:{color:'#eadfe8'}},x:{ticks:{color:'#42505a',font:{size:11}},grid:{display:false}}}}});
 }
 function renderCompanyRegions(company,a){
   const profile=REGION_PROFILES[company]||[["West",0.30],["North",0.26],["South",0.25],["East",0.19]];
@@ -1156,12 +1156,12 @@ function renderCityImpactChart(rows){
   const ctx=document.getElementById('cityImpactChart');
   if(cityImpactChart)cityImpactChart.destroy();
   cityImpactChart=new Chart(ctx,{type:'bar',data:{labels:rows.map(r=>r.city),datasets:[
-    {label:'Patients retained',yAxisID:'patients',data:rows.map(r=>r.retained),backgroundColor:'#198754',borderRadius:7,barPercentage:.72,categoryPercentage:.68},
-    {label:'Leakage %',yAxisID:'leakage',data:rows.map(r=>r.leakage),type:'line',borderColor:'#c43d3d',backgroundColor:'#c43d3d',pointRadius:4,pointHoverRadius:6,tension:.25}
-  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:12,font:{size:12},color:'#52514e'}},tooltip:{callbacks:{label:c=>c.dataset.label==="Leakage %"?`Leakage: ${c.raw}%`:`Patients retained: ${fN(c.raw)}`}}},scales:{
-    patients:{type:'linear',position:'left',beginAtZero:true,title:{display:true,text:'Patients retained',color:'#0b7a4a',font:{size:11,weight:'600'}},ticks:{color:'#0b7a4a',font:{size:11},callback:v=>fN(v)},grid:{color:'#e1e0d9'}},
-    leakage:{type:'linear',position:'right',beginAtZero:true,suggestedMax:70,title:{display:true,text:'Leakage %',color:'#b52d2d',font:{size:11,weight:'600'}},ticks:{color:'#b52d2d',font:{size:11},callback:v=>v+'%'},grid:{drawOnChartArea:false}},
-    x:{ticks:{color:'#52514e',font:{size:11}},grid:{display:false}}
+    {label:'Patients retained',yAxisID:'patients',data:rows.map(r=>r.retained),backgroundColor:'#0e8a8a',borderRadius:7,barPercentage:.72,categoryPercentage:.68},
+    {label:'Leakage %',yAxisID:'leakage',data:rows.map(r=>r.leakage),type:'line',borderColor:'#b92870',backgroundColor:'#b92870',pointRadius:4,pointHoverRadius:6,tension:.25}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:12,font:{size:12},color:'#42505a'}},tooltip:{callbacks:{label:c=>c.dataset.label==="Leakage %"?`Leakage: ${c.raw}%`:`Patients retained: ${fN(c.raw)}`}}},scales:{
+    patients:{type:'linear',position:'left',beginAtZero:true,title:{display:true,text:'Patients retained',color:'#0e8a8a',font:{size:11,weight:'600'}},ticks:{color:'#0e8a8a',font:{size:11},callback:v=>fN(v)},grid:{color:'#eadfe8'}},
+    leakage:{type:'linear',position:'right',beginAtZero:true,suggestedMax:70,title:{display:true,text:'Leakage %',color:'#b92870',font:{size:11,weight:'600'}},ticks:{color:'#b92870',font:{size:11},callback:v=>v+'%'},grid:{drawOnChartArea:false}},
+    x:{ticks:{color:'#42505a',font:{size:11}},grid:{display:false}}
   }}});
 }
 function renderCityTable(rows){
@@ -1237,7 +1237,7 @@ function renderCockpit(){
   // lenses
   document.getElementById('lenses').innerHTML=`
     <div class="card lens board">
-      <h4><span class="icon" style="background:#2a78d6">₹</span>Board value${info('Commercial value from patients staying on paid therapy longer, net of support cost.')}</h4>
+      <h4><span class="icon" style="background:#f47c2c">₹</span>Board value${info('Commercial value from patients staying on paid therapy longer, net of support cost.')}</h4>
       <div class="sub">Value retained after support cost</div>
       <div class="hero" style="color:${r.net>=0?'var(--good)':'var(--critical)'}">${(r.net<0?'−':'')+money(Math.abs(r.net))}</div>
       <div class="herolbl">Net contribution${info('Revenue defended minus total program cost.')} · ROI ${r.roi.toFixed(2)}×${info('Revenue defended divided by program cost.')}</div>
@@ -1246,7 +1246,7 @@ function renderCockpit(){
       <div class="stat"><span class="sl">Return on spend${info('Commercial return per rupee of program spend.')}</span><span class="sv">${r.roi.toFixed(2)}×</span></div>
     </div>
     <div class="card lens patient">
-      <h4><span class="icon" style="background:#1baf7a">♥</span>Patient &amp; access${info('Patient impact after subtracting what likely would have happened without the program.')}</h4>
+      <h4><span class="icon" style="background:#0e8a8a">♥</span>Patient &amp; access${info('Patient impact after subtracting what likely would have happened without the program.')}</h4>
       <div class="sub">Access gain beyond the no-support baseline</div>
       <div class="hero" style="color:var(--good)">${fN(r.retained)}</div>
       <div class="herolbl">Patients kept on therapy*${info('Estimated patients who would have abandoned or stopped therapy without support.')}</div>
@@ -1255,7 +1255,7 @@ function renderCockpit(){
       <div class="stat"><span class="sl">Catastrophic cost averted${info('Households estimated to avoid catastrophic health expenditure because support reduced financial burden.')}</span><span class="sv">${fN(r.cheAverted)}</span></div>
     </div>
     <div class="card lens ops">
-      <h4><span class="icon" style="background:#eb6834">⚙</span>Efficiency${info('How much access benefit each rupee of support creates.')}</h4>
+      <h4><span class="icon" style="background:#d83f87">⚙</span>Efficiency${info('How much access benefit each rupee of support creates.')}</h4>
       <div class="sub">Where spend works hardest</div>
       <div class="hero">${money(r.costPerRetained)}</div>
       <div class="herolbl">Cost per patient retained${info('Program cost divided by estimated patients kept on therapy.')}</div>
@@ -1302,11 +1302,11 @@ function renderCockChart(){
     document.getElementById('chartTitle').textContent="Where impact is coming from";
     const rows=PROG.map(p=>({name:p.co+" · "+p.name,v:impact(p,intel)[METRIC]})).sort((a,b)=>b.v-a.v);
     const money2=["oopRelieved","net","grossProfit"].includes(METRIC);
-    cfg={type:'bar',data:{labels:rows.map(r=>r.name),datasets:[{data:rows.map(r=>r.v),backgroundColor:'#0b7285',borderRadius:5}]},
+    cfg={type:'bar',data:{labels:rows.map(r=>r.name),datasets:[{data:rows.map(r=>r.v),backgroundColor:'#0e8a8a',borderRadius:5}]},
       options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},
         tooltip:{callbacks:{label:c=>money2?money(c.raw):fN(c.raw)}}},
-        scales:{x:{ticks:{color:'#898781',font:{size:10},callback:v=>money2?money(v):fN(v)},grid:{color:'#e1e0d9'}},
-          y:{ticks:{color:'#52514e',font:{size:10.5}},grid:{display:false}}}}};
+        scales:{x:{ticks:{color:'#75818a',font:{size:10},callback:v=>money2?money(v):fN(v)},grid:{color:'#eadfe8'}},
+          y:{ticks:{color:'#42505a',font:{size:10.5}},grid:{display:false}}}}};
     document.getElementById('cockLegend').innerHTML="";
   } else {
     document.getElementById('chartTitle').textContent="Stress profile by metric";
@@ -1319,16 +1319,16 @@ function renderCockChart(){
     ];
     const marketPct=mets.map(m=>m.a!==0?Math.max(0,(m.b/m.a)*100):0);
     cfg={type:'bar',data:{labels:mets.map(m=>m.label),datasets:[
-      {label:'Program view baseline',data:mets.map(()=>100),backgroundColor:'#cfd8d2',borderRadius:4},
-      {label:'Market view retained',data:marketPct,backgroundColor:'#2a78d6',borderRadius:4}]},
-      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:12,font:{size:11},color:'#52514e'}},
+      {label:'Program view baseline',data:mets.map(()=>100),backgroundColor:'#f7d7e7',borderRadius:4},
+      {label:'Market view retained',data:marketPct,backgroundColor:'#d83f87',borderRadius:4}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:12,font:{size:11},color:'#42505a'}},
         tooltip:{callbacks:{label:c=>{
           const m=mets[c.dataIndex];
           if(c.datasetIndex===0)return `Program view: ${m.fmt(m.a)}`;
           return `Market view: ${m.fmt(m.b)} (${f1(c.raw)}% of program view)`;
         }}}},
-        scales:{y:{beginAtZero:true,suggestedMax:110,title:{display:true,text:'Market view retained (% of program view)',color:'#52514e',font:{size:10,weight:'600'}},ticks:{color:'#898781',font:{size:10},callback:v=>v+'%'},grid:{color:'#e1e0d9'}},x:{ticks:{color:'#52514e',font:{size:10}},grid:{display:false}}}}};
-    document.getElementById('cockLegend').innerHTML='<div class="lg"><span class="dot" style="background:#cfd8d2"></span>Program view baseline</div><div class="lg"><span class="dot" style="background:#2a78d6"></span>Market view retained</div>';
+        scales:{y:{beginAtZero:true,suggestedMax:110,title:{display:true,text:'Market view retained (% of program view)',color:'#42505a',font:{size:10,weight:'600'}},ticks:{color:'#75818a',font:{size:10},callback:v=>v+'%'},grid:{color:'#eadfe8'}},x:{ticks:{color:'#42505a',font:{size:10}},grid:{display:false}}}}};
+    document.getElementById('cockLegend').innerHTML='<div class="lg"><span class="dot" style="background:#f7d7e7"></span>Program view baseline</div><div class="lg"><span class="dot" style="background:#d83f87"></span>Market view retained</div>';
   }
   if(cockChart)cockChart.destroy();
   if(typeof Chart!=='undefined')cockChart=new Chart(ctx,cfg);
@@ -1376,14 +1376,14 @@ function renderIntel(){
   if(typeof Chart==='undefined')return;
   const mk=(ref,id,cfg)=>{if(window[ref])window[ref].destroy();window[ref]=new Chart(document.getElementById(id),cfg);};
   const base={responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}};
-  mk('incC','incChart',{type:'line',data:{labels:['2020','2022','2025 (proj)'],datasets:[{data:[13.9,14.61,15.7],borderColor:'#eb6834',backgroundColor:'#eb683422',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#eb6834',borderWidth:2}]},
-    options:{...base,scales:{y:{ticks:{color:'#898781',font:{size:10},callback:v=>v+' L'},grid:{color:'#e1e0d9'},title:{display:true,text:'New cases (lakh/yr)',color:'#898781',font:{size:10}}},x:{ticks:{color:'#52514e',font:{size:10}},grid:{display:false}}},plugins:{...base.plugins,tooltip:{callbacks:{label:c=>c.raw+' lakh new cases'}}}}});
-  mk('bioC','bioChart',{type:'bar',data:{labels:['Launch','Post-patent','CANMAb','150mg vial'],datasets:[{data:[120000,75000,57500,19500],backgroundColor:['#c3c2b7','#eda100','#eb6834','#1baf7a'],borderRadius:5}]},
-    options:{...base,scales:{y:{ticks:{color:'#898781',font:{size:10},callback:v=>'₹'+(v/1000)+'k'},grid:{color:'#e1e0d9'},title:{display:true,text:'Trastuzumab ₹/vial',color:'#898781',font:{size:10}}},x:{ticks:{color:'#52514e',font:{size:10}},grid:{display:false}}},plugins:{...base.plugins,tooltip:{callbacks:{label:c=>'₹'+c.raw.toLocaleString('en-IN')}}}}});
-  mk('risC','risChart',{type:'bar',data:{labels:['Roche originator','Natco generic'],datasets:[{data:[620000,15900],backgroundColor:['#e34948','#1baf7a'],borderRadius:5}]},
-    options:{...base,indexAxis:'y',scales:{x:{ticks:{color:'#898781',font:{size:10},callback:v=>'₹'+(v/1000)+'k'},grid:{color:'#e1e0d9'},title:{display:true,text:'Risdiplam ₹/bottle',color:'#898781',font:{size:10}}},y:{ticks:{color:'#52514e',font:{size:11}},grid:{display:false}}},plugins:{...base.plugins,tooltip:{callbacks:{label:c=>'₹'+c.raw.toLocaleString('en-IN')}}}}});
-  mk('oopC','oopChart',{type:'line',data:{labels:['2013-14','2018-19','2021-22'],datasets:[{data:[64.2,48.8,39.4],borderColor:'#2a78d6',backgroundColor:'#2a78d622',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#2a78d6',borderWidth:2}]},
-    options:{...base,scales:{y:{ticks:{color:'#898781',font:{size:10},callback:v=>v+'%'},grid:{color:'#e1e0d9'},title:{display:true,text:'OOP % of health spend',color:'#898781',font:{size:10}}},x:{ticks:{color:'#52514e',font:{size:10}},grid:{display:false}}},plugins:{...base.plugins,tooltip:{callbacks:{label:c=>c.raw+'% out-of-pocket'}}}}});
+  mk('incC','incChart',{type:'line',data:{labels:['2020','2022','2025 (proj)'],datasets:[{data:[13.9,14.61,15.7],borderColor:'#f47c2c',backgroundColor:'#f47c2c22',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#f47c2c',borderWidth:2}]},
+    options:{...base,scales:{y:{ticks:{color:'#75818a',font:{size:10},callback:v=>v+' L'},grid:{color:'#eadfe8'},title:{display:true,text:'New cases (lakh/yr)',color:'#75818a',font:{size:10}}},x:{ticks:{color:'#42505a',font:{size:10}},grid:{display:false}}},plugins:{...base.plugins,tooltip:{callbacks:{label:c=>c.raw+' lakh new cases'}}}}});
+  mk('bioC','bioChart',{type:'bar',data:{labels:['Launch','Post-patent','CANMAb','150mg vial'],datasets:[{data:[120000,75000,57500,19500],backgroundColor:['#f7d7e7','#f5b25b','#f47c2c','#0e8a8a'],borderRadius:5}]},
+    options:{...base,scales:{y:{ticks:{color:'#75818a',font:{size:10},callback:v=>'₹'+(v/1000)+'k'},grid:{color:'#eadfe8'},title:{display:true,text:'Trastuzumab ₹/vial',color:'#75818a',font:{size:10}}},x:{ticks:{color:'#42505a',font:{size:10}},grid:{display:false}}},plugins:{...base.plugins,tooltip:{callbacks:{label:c=>'₹'+c.raw.toLocaleString('en-IN')}}}}});
+  mk('risC','risChart',{type:'bar',data:{labels:['Roche originator','Natco generic'],datasets:[{data:[620000,15900],backgroundColor:['#d83f87','#0e8a8a'],borderRadius:5}]},
+    options:{...base,indexAxis:'y',scales:{x:{ticks:{color:'#75818a',font:{size:10},callback:v=>'₹'+(v/1000)+'k'},grid:{color:'#eadfe8'},title:{display:true,text:'Risdiplam ₹/bottle',color:'#75818a',font:{size:10}}},y:{ticks:{color:'#42505a',font:{size:11}},grid:{display:false}}},plugins:{...base.plugins,tooltip:{callbacks:{label:c=>'₹'+c.raw.toLocaleString('en-IN')}}}}});
+  mk('oopC','oopChart',{type:'line',data:{labels:['2013-14','2018-19','2021-22'],datasets:[{data:[64.2,48.8,39.4],borderColor:'#d83f87',backgroundColor:'#d83f8722',fill:true,tension:.3,pointRadius:4,pointBackgroundColor:'#d83f87',borderWidth:2}]},
+    options:{...base,scales:{y:{ticks:{color:'#75818a',font:{size:10},callback:v=>v+'%'},grid:{color:'#eadfe8'},title:{display:true,text:'OOP % of health spend',color:'#75818a',font:{size:10}}},x:{ticks:{color:'#42505a',font:{size:10}},grid:{display:false}}},plugins:{...base.plugins,tooltip:{callbacks:{label:c=>c.raw+'% out-of-pocket'}}}}});
 }
 const INTEL_ROWS=[
  ["Biosimilar / generic erosion","Trastuzumab −84%, imatinib commoditized, ~7 brands each","Guts the price-subsidy rationale for eroding/commoditized molecules → discount revenue defended (×0.12–0.5)"],
@@ -1478,13 +1478,13 @@ function renderLeakageWaterfallChart(){
         const top=Math.min(y.getPixelForValue(s.start),y.getPixelForValue(s.end));
         const bottom=Math.max(y.getPixelForValue(s.start),y.getPixelForValue(s.end));
         const inside=(bottom-top)>30;
-        ctx.fillStyle=inside?"#fff":(s.type==="end"?"#1f8f62":s.type==="start"?"#0f6674":"#a84444");
+        ctx.fillStyle=inside?"#fff":(s.type==="end"?"#0e8a8a":s.type==="start"?"#0e8a8a":"#d83f87");
         ctx.fillText(value,bar.x,inside?top+16:top-10);
         if(i>0&&i<steps.length-1){
           const prev=steps[i-1];
           const level=y.getPixelForValue(prev.end);
           const prevBar=bars[i-1];
-          ctx.strokeStyle="rgba(66,80,90,.34)";
+          ctx.strokeStyle="rgba(216,63,135,.28)";
           ctx.lineWidth=1;
           ctx.setLineDash([4,4]);
           ctx.beginPath();
@@ -1511,7 +1511,7 @@ function renderLeakageWaterfallChart(){
     {
       label:"Value change",
       data:steps.map(s=>Math.abs(s.end-s.start)),
-      backgroundColor:steps.map(s=>s.type==="start"?"#0f6b78":s.type==="end"?"#2f9d6a":"#d9645b"),
+      backgroundColor:steps.map(s=>s.type==="start"?"#0e8a8a":s.type==="end"?"#75c8bf":"#d83f87"),
       borderRadius:4,
       borderSkipped:false,
       stack:"waterfall",
@@ -1539,7 +1539,7 @@ function renderLeakageWaterfallChart(){
     scales:{
       y:{min:0,max:100,title:{display:true,text:"% of intended patient value",color:"#75818a",font:{size:11,weight:"600"}},
         ticks:{stepSize:20,color:"#75818a",font:{size:11},callback:v=>v+"%"},
-        grid:{color:"rgba(117,129,138,.22)"},
+        grid:{color:"rgba(234,223,232,.9)"},
         stacked:true},
       x:{ticks:{color:"#42505a",font:{size:10.5},maxRotation:0,minRotation:0},grid:{display:false},stacked:true}
     }
