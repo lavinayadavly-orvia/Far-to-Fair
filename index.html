@@ -731,6 +731,7 @@ let DRILL_CITY="Mumbai";
 let DRILL_PATIENT=0;
 let DASH_PROGRAM="__all__";
 let DRILL_PROGRAM="__all__";
+const APP_STATE_KEY="farToFairState.v1";
 
 const REGION_PROFILES={
   "Novartis":[["West",0.31],["North",0.27],["South",0.25],["East",0.17]],
@@ -862,12 +863,15 @@ function activateTab(view,{updateHash=true,scroll=true}={}){
   panel.classList.add('active');
   if(updateHash&&location.hash!==`#${view}`)history.replaceState(null,"",`#${view}`);
   if(scroll)window.scrollTo({top:0,behavior:'smooth'});
+  saveAppState(view);
   requestAnimationFrame(()=>renderActiveView(view));
   return true;
 }
 function initialView(){
   const hash=decodeURIComponent(location.hash.replace(/^#/,"")).trim();
-  return document.getElementById(hash)?hash:"dashboard";
+  if(document.getElementById(hash))return hash;
+  const saved=readSavedState().view;
+  return document.getElementById(saved)?saved:"dashboard";
 }
 document.getElementById('tabbar').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;
   activateTab(b.dataset.v);
@@ -899,6 +903,33 @@ function renderDashboardOptions(){
   const list=document.getElementById('companySearch');
   list.innerHTML=companyNames().map(n=>`<option value="${n}">${n}</option>`).join('');
   list.value=DASH_COMPANY;
+}
+function readSavedState(){
+  try{return JSON.parse(localStorage.getItem(APP_STATE_KEY)||"{}");}
+  catch(err){return {};}
+}
+function saveAppState(view){
+  try{
+    const active=view||document.querySelector('.view.active')?.id||initialView();
+    localStorage.setItem(APP_STATE_KEY,JSON.stringify({
+      view:active,
+      dashCompany:DASH_COMPANY,
+      dashProgram:DASH_PROGRAM,
+      drillCompany:DRILL_COMPANY,
+      drillProgram:DRILL_PROGRAM,
+      drillCity:DRILL_CITY,
+      drillPatient:DRILL_PATIENT
+    }));
+  }catch(err){}
+}
+function loadAppState(){
+  const s=readSavedState();
+  if(companyNames().includes(s.dashCompany))DASH_COMPANY=s.dashCompany;
+  if(companyNames().includes(s.drillCompany))DRILL_COMPANY=s.drillCompany;
+  if(validProgramId(DASH_COMPANY,s.dashProgram))DASH_PROGRAM=s.dashProgram;
+  if(validProgramId(DRILL_COMPANY,s.drillProgram))DRILL_PROGRAM=s.drillProgram;
+  if(cityProfile(DRILL_COMPANY).some(c=>c[0]===s.drillCity))DRILL_CITY=s.drillCity;
+  if(Number.isInteger(s.drillPatient)&&s.drillPatient>=0)DRILL_PATIENT=s.drillPatient;
 }
 function programsForCompany(company){
   return PROG.filter(p=>p.co===company);
@@ -932,11 +963,13 @@ function renderProgramFilter(elId,company,selected,onClickName){
 function setDashboardProgram(programId){
   DASH_PROGRAM=programId;
   DRILL_PROGRAM=programId;
+  saveAppState('dashboard');
   renderDashboard();
 }
 function setDrillProgram(programId){
   DRILL_PROGRAM=programId;
   DRILL_PATIENT=0;
+  saveAppState('drilldown');
   renderDrilldown();
 }
 function companyMaturityText(programs){
@@ -989,6 +1022,7 @@ function renderDashboard(q){
   renderCompanyRegions(DASH_COMPANY,a);
   renderCompanyPrograms(programs);
   document.getElementById('companyNarrative').innerHTML=companyNarrative(DASH_COMPANY,programs,a,b,erosionPct);
+  saveAppState();
 }
 function renderCompanyImpactChart(programs){
   const rows=programs.map(p=>({p,r:impact(p,false)})).sort((x,y)=>y.r.retained-x.r.retained);
@@ -1116,6 +1150,7 @@ function renderDrilldown(){
     <div class="big">${currentCity.leakage}% leakage</div>
     <p><b>${currentCity.city}</b> is losing value mainly before impact becomes durable. The practical move is to ${currentCity.move}.</p>
     <p>That means the city view should not stop at enrolment. It should track first approval, refill continuity, co-pay shock, and whether the patient remains on therapy after support changes.</p>`;
+  saveAppState();
 }
 function renderCityImpactChart(rows){
   const ctx=document.getElementById('cityImpactChart');
@@ -1575,7 +1610,7 @@ const sources=[
 document.getElementById('srcList').innerHTML=sources.map(s=>`<div class="src"><a href="${s[1]}" target="_blank" rel="noopener">${s[0]}</a></div>`).join('');
 
 /* ===== init ===== */
-fillProgSel();renderDataTable();initDashboard();initDrilldown();renderDashboard();renderCockpit();activateTab(initialView(),{updateHash:false,scroll:false});
+loadAppState();fillProgSel();renderDataTable();initDashboard();initDrilldown();renderCockpit();activateTab(initialView(),{updateHash:false,scroll:false});
 const tipPopover=document.createElement('div');
 tipPopover.className='tip-popover';
 document.body.appendChild(tipPopover);
