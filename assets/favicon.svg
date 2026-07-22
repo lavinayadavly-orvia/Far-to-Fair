@@ -1,14 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Far-to-Fair">
-  <defs>
-    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#173943"/>
-      <stop offset="1" stop-color="#0d6675"/>
-    </linearGradient>
-  </defs>
-  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#bg)"/>
-  <path d="M16 29h14" stroke="#f7f4ed" stroke-width="6" stroke-linecap="round"/>
-  <path d="M22 18v28" stroke="#f7f4ed" stroke-width="6" stroke-linecap="round"/>
-  <path d="M33 32h11" stroke="#e3b45f" stroke-width="5" stroke-linecap="round"/>
-  <path d="M41 23l10 9-10 9" fill="none" stroke="#e3b45f" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M17 50h30" stroke="#f7f4ed" stroke-width="2.5" stroke-linecap="round" opacity=".86"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Far to Fair">
+  <rect x="4" y="4" width="56" height="56" rx="10" fill="#302827"/>
+  <circle cx="32" cy="29" r="20" fill="none" stroke="#ded6ca" stroke-width="2.5"/>
+  <path d="M21 21c5-4 17-4 22 0" fill="none" stroke="#ded6ca" stroke-width="4" stroke-linecap="round"/>
+  <path d="M32 17v28" stroke="#ded6ca" stroke-width="4" stroke-linecap="round"/>
+  <path d="M26 45h12l5 5H21z" fill="#ded6ca"/>
+  <path d="M20 24v12M44 24v12" stroke="#ded6ca" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 36h12l-3 5h-6zM38 36h12l-3 5h-6z" fill="#ded6ca"/>
+  <path d="M20 24l-6 12M20 24l6 12M44 24l-6 12M44 24l6 12" stroke="#ded6ca" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M24 13c-6 4-10 10-12 17M40 13c6 4 10 10 12 17" fill="none" stroke="#ded6ca" stroke-width="2" stroke-linecap="round" opacity=".82"/>
 </svg>
