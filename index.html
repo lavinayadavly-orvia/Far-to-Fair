@@ -159,7 +159,7 @@
   .search-card h2,.search-card p{display:none}
   .company-search{display:grid;grid-template-columns:minmax(220px,320px) auto;gap:10px;align-items:center}
   @media(max-width:560px){.company-search{grid-template-columns:1fr}}
-  .company-search input{width:100%;padding:12px 13px;border-radius:7px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:15px;font-weight:700;font-family:inherit}
+  .company-search select{width:100%;min-width:0;padding:12px 36px 12px 13px;border-radius:7px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:15px;font-weight:700;font-family:inherit}
   .company-search button{padding:12px 15px;border-radius:7px;border:1px solid var(--teal);background:var(--teal);color:#fff;font-size:13px;font-weight:760;cursor:pointer;font-family:inherit;white-space:nowrap}
   .answer-panel{background:#fff;border:1px solid var(--border);border-radius:8px;box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(360px,.82fr) minmax(520px,1.18fr);overflow:hidden}
   @media(max-width:1080px){.answer-panel{grid-template-columns:1fr}}
@@ -294,8 +294,7 @@
       </div>
       <div class="search-card">
         <div class="company-search">
-          <input id="companySearch" list="companyList" value="Novartis" placeholder="Novartis, Roche, Pfizer">
-          <datalist id="companyList"></datalist>
+          <select id="companySearch" aria-label="Select pharma company"></select>
           <button id="companyRun">Assess</button>
         </div>
       </div>
@@ -776,12 +775,12 @@ function matchCompany(q){
 function initDashboard(){
   renderDashboardOptions();
   document.getElementById('companyRun').addEventListener('click',()=>renderDashboard(document.getElementById('companySearch').value));
-  document.getElementById('companySearch').addEventListener('keydown',e=>{if(e.key==="Enter")renderDashboard(e.target.value);});
-  document.getElementById('companySearch').addEventListener('input',e=>{if(companyNames().some(n=>n.toLowerCase()===e.target.value.trim().toLowerCase()))renderDashboard(e.target.value);});
+  document.getElementById('companySearch').addEventListener('change',e=>renderDashboard(e.target.value));
 }
 function renderDashboardOptions(){
-  const list=document.getElementById('companyList');
-  list.innerHTML=companyNames().map(n=>`<option value="${n}"></option>`).join('');
+  const list=document.getElementById('companySearch');
+  list.innerHTML=companyNames().map(n=>`<option value="${n}">${n}</option>`).join('');
+  list.value=DASH_COMPANY;
 }
 function companyMaturityText(programs){
   const counts=programs.reduce((acc,p)=>{acc[p.maturity]=(acc[p.maturity]||0)+1;return acc;},{});
@@ -793,8 +792,8 @@ function companyMaturityText(programs){
 }
 function renderDashboard(q){
   DASH_COMPANY=matchCompany(q||document.getElementById('companySearch')?.value);
-  const input=document.getElementById('companySearch');
-  if(input)input.value=DASH_COMPANY;
+  const select=document.getElementById('companySearch');
+  if(select)select.value=DASH_COMPANY;
   const programs=PROG.filter(p=>p.co===DASH_COMPANY);
   const a=aggregatePrograms(programs,false);
   const b=aggregatePrograms(programs,true);
