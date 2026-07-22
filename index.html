@@ -213,6 +213,45 @@
   .text-action.primary{border-color:var(--teal);background:var(--teal);color:#fff}
   @media(max-width:760px){.next-read{grid-template-columns:1fr}.next-actions{justify-content:flex-start}}
   #dashboard .callout b{color:var(--text)}
+  .drill-shell{display:grid;gap:20px}
+  .drill-command{display:grid;grid-template-columns:minmax(0,1fr) minmax(420px,460px);gap:28px;align-items:end;padding:2px 0 16px;border-bottom:1px solid var(--grid)}
+  @media(max-width:980px){.drill-command{grid-template-columns:1fr}}
+  .drill-controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:620px){.drill-controls{grid-template-columns:1fr}}
+  .drill-controls select{width:100%;min-width:0;padding:12px 36px 12px 13px;border-radius:7px;border:1px solid var(--border);background:#fff;color:var(--text);font-size:15px;font-weight:700;font-family:inherit}
+  .metric-ribbon{display:grid;grid-template-columns:repeat(6,1fr);background:#fff;border-top:1px solid var(--grid);border-bottom:1px solid var(--grid)}
+  @media(max-width:1080px){.metric-ribbon{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:620px){.metric-ribbon{grid-template-columns:1fr 1fr}}
+  .metric-cell{padding:17px 18px;border-right:1px solid var(--grid)}
+  .metric-cell:last-child{border-right:0}
+  .metric-cell .k{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:850}
+  .metric-cell .v{font-size:25px;font-weight:850;line-height:1;margin-top:9px;color:var(--text)}
+  .metric-cell .s{font-size:12px;color:var(--text2);line-height:1.35;margin-top:8px}
+  .drill-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
+  .drill-grid>*{min-width:0}
+  @media(max-width:1120px){.drill-grid{grid-template-columns:1fr}}
+  .plain-panel{background:#fff;border-top:1px solid var(--grid);border-bottom:1px solid var(--grid);padding:20px 0}
+  .city-table-wrap,.patient-table-wrap{overflow:auto;background:#fff;border-top:1px solid var(--grid);border-bottom:1px solid var(--grid)}
+  .city-table-wrap table,.patient-table-wrap table{min-width:780px}
+  .patient-table-wrap tbody tr{cursor:pointer}
+  .patient-table-wrap tbody tr.active{background:#eef8f2}
+  .risk-chip{display:inline-flex;align-items:center;padding:3px 8px;border-radius:999px;font-size:11px;font-weight:800;white-space:nowrap}
+  .risk-chip.high{background:#fdecec;color:#a32727}.risk-chip.medium{background:#fff4df;color:#8a5e00}.risk-chip.low{background:#e7f6ec;color:#0b7a4a}
+  .city-rec{display:grid;gap:16px;align-content:start;height:100%}
+  .city-rec .big{font-size:34px;font-weight:850;line-height:1;color:var(--teal)}
+  .city-rec p{margin:0;color:var(--text2);font-size:14px;line-height:1.55}
+  .journey-detail{display:grid;grid-template-columns:minmax(280px,.7fr) 1fr;gap:26px;align-items:start}
+  @media(max-width:900px){.journey-detail{grid-template-columns:1fr}}
+  .patient-name{font-size:18px;font-weight:850;color:var(--text)}
+  .patient-meta{font-size:13px;color:var(--muted);margin-top:4px}
+  .journey-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--grid);border-bottom:1px solid var(--grid)}
+  @media(max-width:760px){.journey-steps{grid-template-columns:1fr 1fr}}
+  .journey-step{padding:14px 15px;border-right:1px solid var(--grid)}
+  .journey-step:last-child{border-right:0}
+  .journey-step b{display:block;font-size:13px;margin-bottom:5px;color:var(--text)}
+  .journey-step span{display:block;font-size:12px;color:var(--text2);line-height:1.4}
+  .microbar{height:8px;background:#e6e4dc;border-radius:999px;overflow:hidden;margin-top:8px}
+  .microbar span{display:block;height:100%;background:var(--teal);border-radius:999px}
   .about-hero{display:grid;grid-template-columns:minmax(380px,.82fr) minmax(420px,1.18fr);gap:56px;align-items:end;padding:18px 0 42px;border-bottom:1px solid var(--grid)}
   @media(max-width:980px){.about-hero{grid-template-columns:1fr;gap:24px}}
   .about-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);font-weight:850;margin-bottom:18px}
@@ -275,6 +314,7 @@
 
 <nav class="tabs"><div class="wrap" id="tabbar">
   <button class="tab active" data-v="dashboard">Dashboard</button>
+  <button class="tab" data-v="drilldown">City &amp; Patient</button>
   <button class="tab" data-v="cockpit">Impact Cockpit</button>
   <button class="tab" data-v="intel">Market Reality</button>
   <button class="tab" data-v="data">Data &amp; Inputs</button>
@@ -333,9 +373,63 @@
     <div class="next-read">
       <div id="companyNarrative"></div>
       <div class="next-actions">
+        <button class="text-action primary" data-jump="drilldown">Drill into cities</button>
         <button class="text-action primary" data-jump="data">Use internal data</button>
         <button class="text-action" data-jump="cockpit">Stress-test assumptions</button>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CITY & PATIENT ============ -->
+<section class="view" id="drilldown">
+  <div class="drill-shell">
+    <div class="drill-command">
+      <div class="dash-title">
+        <div class="overline">City and patient impact</div>
+        <h2>Where is support actually changing the journey?</h2>
+        <p>Move from company impact to city leakage, then to patient-level intervention risk.</p>
+        <div class="model-status">Scenario cohort · city and patient records can be replaced with live operations data</div>
+      </div>
+      <div class="drill-controls">
+        <select id="drillCompany" aria-label="Select company for city drilldown"></select>
+        <select id="drillCity" aria-label="Select city for patient drilldown"></select>
+      </div>
+    </div>
+
+    <div class="metric-ribbon" id="drillMetrics"></div>
+
+    <div class="drill-grid">
+      <div class="card">
+        <h3 class="blk" style="margin-top:2px">City impact spread</h3>
+        <div class="chartbox sm"><canvas id="cityImpactChart"></canvas></div>
+      </div>
+      <div class="card city-rec" id="cityRecommendation"></div>
+    </div>
+
+    <div class="drill-grid">
+      <div>
+        <h3 class="blk" style="margin-top:2px">City leakage table</h3>
+        <div class="city-table-wrap">
+          <table>
+            <thead><tr><th>City</th><th class="num">Eligible</th><th class="num">Enrolled</th><th class="num">Conversion</th><th class="num">Retained</th><th class="num">OOP relief</th><th class="num">Leakage</th><th>Best move</th></tr></thead>
+            <tbody id="cityTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <div>
+        <h3 class="blk" style="margin-top:2px">Patient risk queue</h3>
+        <div class="patient-table-wrap">
+          <table>
+            <thead><tr><th>Patient</th><th>Program</th><th>Status</th><th class="num">OOP before</th><th class="num">OOP after</th><th>Risk</th></tr></thead>
+            <tbody id="patientTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="plain-panel">
+      <div class="journey-detail" id="patientDetail"></div>
     </div>
   </div>
 </section>
@@ -624,6 +718,9 @@ let PRONG="a";
 let SEL="__portfolio__";
 let METRIC="retained";
 let DASH_COMPANY="Novartis";
+let DRILL_COMPANY="Novartis";
+let DRILL_CITY="Mumbai";
+let DRILL_PATIENT=0;
 
 const REGION_PROFILES={
   "Novartis":[["West",0.31],["North",0.27],["South",0.25],["East",0.17]],
@@ -633,6 +730,14 @@ const REGION_PROFILES={
   "Sanofi":[["West",0.29],["South",0.27],["North",0.24],["East",0.20]],
   "Johnson & Johnson":[["North",0.32],["South",0.25],["West",0.24],["East",0.19]]
 };
+const CITY_PROFILES={
+  "Novartis":[["Mumbai",.24,.77,.18,"tighten onboarding before the first refill"],["Delhi NCR",.19,.70,.24,"recover physician referrals"],["Bengaluru",.17,.82,.14,"protect persistence after the free phase"],["Hyderabad",.15,.76,.17,"move diagnostics earlier"],["Kolkata",.12,.61,.31,"reduce documentation friction"],["Lucknow",.08,.54,.39,"add field navigation"],["Patna",.05,.49,.45,"shift enrolment closer to the treating centre"]],
+  "Roche":[["Mumbai",.22,.80,.16,"protect follow-up after subsidy approval"],["Delhi NCR",.18,.72,.22,"reduce income-proof friction"],["Bengaluru",.16,.78,.17,"pull diagnostics into the first visit"],["Chennai",.15,.75,.20,"watch donation cliff risk"],["Hyderabad",.13,.70,.24,"tighten refill coordination"],["Kolkata",.09,.58,.36,"increase referral capture"],["Patna",.07,.46,.47,"add assisted enrolment"]],
+  "Pfizer":[["Delhi NCR",.22,.74,.21,"close residual co-pay abandonment"],["Mumbai",.20,.79,.17,"protect refill adherence"],["Bengaluru",.16,.77,.18,"use navigator follow-up"],["Chennai",.14,.72,.22,"front-load benefit approval"],["Hyderabad",.12,.68,.26,"monitor dose-gap risk"],["Kolkata",.09,.57,.38,"recover missing referrals"],["Jaipur",.07,.52,.42,"simplify paperwork"]],
+  "AstraZeneca":[["Bengaluru",.20,.84,.12,"convert tested patients faster"],["Mumbai",.18,.80,.15,"speed report-to-therapy handoff"],["Hyderabad",.17,.78,.17,"protect diagnostic follow-through"],["Chennai",.15,.76,.18,"tighten oncology network capture"],["Delhi NCR",.13,.69,.25,"reduce referral leakage"],["Kolkata",.09,.60,.34,"support sample logistics"],["Patna",.08,.50,.44,"extend access beyond metro centres"]],
+  "Sanofi":[["Mumbai",.20,.75,.20,"prioritize high-risk refill gaps"],["Bengaluru",.17,.79,.16,"keep digital adherence active"],["Delhi NCR",.16,.70,.25,"recover drop-offs after counselling"],["Hyderabad",.14,.73,.21,"focus rare-disease handoff"],["Chennai",.12,.76,.19,"protect home-delivery continuity"],["Kolkata",.11,.59,.36,"add paperwork support"],["Lucknow",.10,.53,.41,"expand navigator coverage"]]
+};
+const FALLBACK_CITIES=[["Mumbai",.22,.76,.19,"tighten onboarding"],["Delhi NCR",.18,.70,.25,"recover referrals"],["Bengaluru",.16,.78,.17,"protect persistence"],["Hyderabad",.14,.72,.22,"coordinate refills"],["Chennai",.12,.73,.21,"speed approval"],["Kolkata",.10,.59,.36,"reduce paperwork"],["Patna",.08,.49,.45,"add field navigation"]];
 
 /* ===== impact engine ===== */
 function impact(p,intel){
@@ -732,6 +837,7 @@ function renderImpactVerdict(rA,rB,isPort){
 /* ===== tabs ===== */
 function renderActiveView(v){
   if(v==='dashboard')renderDashboard();
+  if(v==='drilldown')renderDrilldown();
   if(v==='cockpit')renderCockpit();
   if(v==='intel')renderIntel();
   if(v==='about')renderLeakageWaterfallChart();
@@ -794,6 +900,7 @@ function companyMaturityText(programs){
 }
 function renderDashboard(q){
   DASH_COMPANY=matchCompany(q||document.getElementById('companySearch')?.value);
+  DRILL_COMPANY=DASH_COMPANY;
   const select=document.getElementById('companySearch');
   if(select)select.value=DASH_COMPANY;
   const programs=PROG.filter(p=>p.co===DASH_COMPANY);
@@ -868,6 +975,138 @@ function companyNarrative(company,programs,a,b,erosionPct){
   const concentration=top?`The readout is most dependent on <b>${top.p.name}</b>, which contributes the largest retained-patient signal.`:"";
   const risk=erosionPct>45?`The concern is durability: market pressure removes <b>${erosionPct}%</b> of defended value, so the story must lean on verified patient outcomes, not only subsidy economics.`:`The value case is comparatively durable, with a <b>${erosionPct}%</b> market haircut after pressure testing.`;
   return `${access} ${concentration} ${risk}`;
+}
+
+/* ===== city and patient drilldown ===== */
+let cityImpactChart;
+function cityProfile(company){return CITY_PROFILES[company]||FALLBACK_CITIES;}
+function cityRows(company){
+  const programs=PROG.filter(p=>p.co===company);
+  const a=aggregatePrograms(programs,false);
+  return cityProfile(company).map(([city,share,conversion,friction,move])=>{
+    const enrolled=Math.max(1,Math.round(a.N*share));
+    const eligible=Math.max(enrolled,Math.round(enrolled/conversion));
+    const retained=Math.round(a.retained*share*(1-friction*.18));
+    const oopRelief=a.oopRelieved*share*(1-friction*.12);
+    const leakage=Math.max(8,Math.min(58,Math.round((1-conversion)*62+friction*46)));
+    return {city,share,conversion,friction,move,eligible,enrolled,retained,oopRelief,leakage};
+  });
+}
+function patientRows(company,city){
+  const programs=PROG.filter(p=>p.co===company);
+  const cityRow=cityRows(company).find(r=>r.city===city)||cityRows(company)[0];
+  const seed=city.length+company.length;
+  return [0,1,2,3,4].map(i=>{
+    const p=programs[i%programs.length];
+    const status=["Donation cliff","Missed refill","Paperwork hold","Residual co-pay","Stable on therapy"][i];
+    const before=(+p.monthlyPrice)||Math.max(18000,+p.progCostPerPt/4);
+    const relief=[.82,.62,.50,.44,.72][(i+seed)%5]*(+p.oopRed/100||.35);
+    const after=Math.max(0,before*(1-relief));
+    const persistGap=Math.max(0,+p.persistWith-+p.persistWithout);
+    const riskScore=Math.max(10,Math.min(95,Math.round(cityRow.leakage*.9+(4-i)*7+(+p.wouldAbandon)*.25)));
+    const risk=riskScore>=65?"high":riskScore>=40?"medium":"low";
+    const id=`PT-${city.slice(0,3).toUpperCase()}-${String(1420+seed*9+i*37).padStart(4,"0")}`;
+    return {id,program:p.name,ta:p.ta,status,before,after,riskScore,risk,city,company,
+      startDays:Math.max(1,Math.round(18+cityRow.friction*28-i*2)),
+      approval:Math.max(42,Math.round(cityRow.conversion*100-i*3)),
+      persistence:Math.max(3,Math.round(+p.persistWith-(i===0?3:i===1?2:0))),
+      cliff:i===0?Math.max(1,+p.freeMonths||3):Math.max(0,(+p.freeMonths||0)-i),
+      action:["Bridge the next paid cycle","Navigator refill call this week","Assisted document pickup","Offer income-tiered co-pay review","Keep on low-touch monitoring"][i]
+    };
+  });
+}
+function initDrilldown(){
+  const company=document.getElementById('drillCompany');
+  const city=document.getElementById('drillCity');
+  company.innerHTML=companyNames().map(n=>`<option value="${n}">${n}</option>`).join('');
+  company.addEventListener('change',e=>{DRILL_COMPANY=e.target.value;DRILL_CITY=cityProfile(DRILL_COMPANY)[0][0];DRILL_PATIENT=0;renderDrilldown();});
+  city.addEventListener('change',e=>{DRILL_CITY=e.target.value;DRILL_PATIENT=0;renderDrilldown();});
+}
+function renderDrilldown(){
+  const companySel=document.getElementById('drillCompany');
+  const citySel=document.getElementById('drillCity');
+  if(!companySel||!citySel)return;
+  if(!companyNames().includes(DRILL_COMPANY))DRILL_COMPANY=DASH_COMPANY;
+  companySel.innerHTML=companyNames().map(n=>`<option value="${n}">${n}</option>`).join('');
+  const profile=cityProfile(DRILL_COMPANY);
+  if(!profile.some(c=>c[0]===DRILL_CITY))DRILL_CITY=profile[0][0];
+  companySel.value=DRILL_COMPANY;
+  citySel.innerHTML=profile.map(([city])=>`<option value="${city}">${city}</option>`).join('');
+  citySel.value=DRILL_CITY;
+  const rows=cityRows(DRILL_COMPANY);
+  const currentCity=rows.find(r=>r.city===DRILL_CITY)||rows[0];
+  const patients=patientRows(DRILL_COMPANY,currentCity.city);
+  if(DRILL_PATIENT>=patients.length)DRILL_PATIENT=0;
+  const conv=currentCity.eligible?currentCity.enrolled/currentCity.eligible*100:0;
+  const retainedRate=currentCity.enrolled?currentCity.retained/currentCity.enrolled*100:0;
+  document.getElementById('drillMetrics').innerHTML=`
+    <div class="metric-cell"><div class="k">Eligible pool</div><div class="v">${fN(currentCity.eligible)}</div><div class="s">${currentCity.city}</div></div>
+    <div class="metric-cell"><div class="k">Enrolled</div><div class="v">${fN(currentCity.enrolled)}</div><div class="s">${conv.toFixed(0)}% conversion</div></div>
+    <div class="metric-cell"><div class="k">Retained</div><div class="v">${fN(currentCity.retained)}</div><div class="s">${retainedRate.toFixed(1)}% of enrolled</div></div>
+    <div class="metric-cell"><div class="k">OOP relief</div><div class="v">${money(currentCity.oopRelief)}</div><div class="s">patient affordability</div></div>
+    <div class="metric-cell"><div class="k">Leakage</div><div class="v">${currentCity.leakage}%</div><div class="s">lost before durable impact</div></div>
+    <div class="metric-cell"><div class="k">Priority patients</div><div class="v">${patients.filter(p=>p.risk==="high").length}</div><div class="s">need action now</div></div>`;
+  renderCityImpactChart(rows);
+  renderCityTable(rows);
+  renderPatientTable(patients);
+  renderPatientDetail(patients[DRILL_PATIENT],currentCity);
+  document.getElementById('cityRecommendation').innerHTML=`
+    <h3 class="blk" style="margin:0">Best city move</h3>
+    <div class="big">${currentCity.leakage}% leakage</div>
+    <p><b>${currentCity.city}</b> is losing value mainly before impact becomes durable. The practical move is to ${currentCity.move}.</p>
+    <p>That means the city view should not stop at enrolment. It should track first approval, refill continuity, co-pay shock, and whether the patient remains on therapy after support changes.</p>`;
+}
+function renderCityImpactChart(rows){
+  const ctx=document.getElementById('cityImpactChart');
+  if(cityImpactChart)cityImpactChart.destroy();
+  cityImpactChart=new Chart(ctx,{type:'bar',data:{labels:rows.map(r=>r.city),datasets:[
+    {label:'Patients retained',yAxisID:'patients',data:rows.map(r=>r.retained),backgroundColor:'#198754',borderRadius:7,barPercentage:.72,categoryPercentage:.68},
+    {label:'Leakage %',yAxisID:'leakage',data:rows.map(r=>r.leakage),type:'line',borderColor:'#c43d3d',backgroundColor:'#c43d3d',pointRadius:4,pointHoverRadius:6,tension:.25}
+  ]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:12,font:{size:12},color:'#52514e'}},tooltip:{callbacks:{label:c=>c.dataset.label==="Leakage %"?`Leakage: ${c.raw}%`:`Patients retained: ${fN(c.raw)}`}}},scales:{
+    patients:{type:'linear',position:'left',beginAtZero:true,title:{display:true,text:'Patients retained',color:'#0b7a4a',font:{size:11,weight:'600'}},ticks:{color:'#0b7a4a',font:{size:11},callback:v=>fN(v)},grid:{color:'#e1e0d9'}},
+    leakage:{type:'linear',position:'right',beginAtZero:true,suggestedMax:70,title:{display:true,text:'Leakage %',color:'#b52d2d',font:{size:11,weight:'600'}},ticks:{color:'#b52d2d',font:{size:11},callback:v=>v+'%'},grid:{drawOnChartArea:false}},
+    x:{ticks:{color:'#52514e',font:{size:11}},grid:{display:false}}
+  }}});
+}
+function renderCityTable(rows){
+  document.getElementById('cityTable').innerHTML=rows.map(r=>`
+    <tr>
+      <td><b>${r.city}</b></td>
+      <td class="num">${fN(r.eligible)}</td>
+      <td class="num">${fN(r.enrolled)}</td>
+      <td class="num">${(r.enrolled/r.eligible*100).toFixed(0)}%</td>
+      <td class="num">${fN(r.retained)}</td>
+      <td class="num">${money(r.oopRelief)}</td>
+      <td class="num">${r.leakage}%</td>
+      <td>${r.move}</td>
+    </tr>`).join('');
+}
+function renderPatientTable(rows){
+  document.getElementById('patientTable').innerHTML=rows.map((p,i)=>`
+    <tr class="${i===DRILL_PATIENT?"active":""}" data-patient="${i}">
+      <td><b>${p.id}</b></td>
+      <td>${p.program}</td>
+      <td>${p.status}</td>
+      <td class="num">${money(p.before)}</td>
+      <td class="num">${money(p.after)}</td>
+      <td><span class="risk-chip ${p.risk}">${p.risk}</span></td>
+    </tr>`).join('');
+  document.querySelectorAll('#patientTable tr').forEach(row=>row.addEventListener('click',()=>{DRILL_PATIENT=+row.dataset.patient;renderDrilldown();}));
+}
+function renderPatientDetail(p,city){
+  const relief=p.before?Math.round((1-p.after/p.before)*100):100;
+  document.getElementById('patientDetail').innerHTML=`
+    <div>
+      <div class="patient-name">${p.id}</div>
+      <div class="patient-meta">${p.company} · ${p.city} · ${p.program}</div>
+      <p style="margin:14px 0 0;color:var(--text2);font-size:14px;line-height:1.55"><b>Next action:</b> ${p.action}. This patient is a better unit of truth than enrolment alone because the platform can see whether support survived paperwork, co-pay, refill, and persistence risk.</p>
+    </div>
+    <div class="journey-steps">
+      <div class="journey-step"><b>Start</b><span>${p.startDays} days to support start</span><div class="microbar"><span style="width:${Math.max(12,100-p.startDays*2)}%"></span></div></div>
+      <div class="journey-step"><b>Approval</b><span>${p.approval}% probability of cleared benefit</span><div class="microbar"><span style="width:${p.approval}%"></span></div></div>
+      <div class="journey-step"><b>Affordability</b><span>${relief}% OOP reduction this cycle</span><div class="microbar"><span style="width:${relief}%"></span></div></div>
+      <div class="journey-step"><b>Durability</b><span>${p.persistence} months expected persistence · ${p.cliff} month cliff watch</span><div class="microbar"><span style="width:${Math.min(100,p.persistence*4)}%"></span></div></div>
+    </div>`;
 }
 
 /* ===== selectors ===== */
@@ -1072,8 +1311,8 @@ function renderDataTable(){
   </tr>`).join('');
 }
 document.querySelector('#dataTable').addEventListener('change',e=>{const inp=e.target.closest('input.cell');if(!inp)return;
-  const p=PROG.find(x=>x.id===inp.dataset.id);let v=parseFloat(inp.value);if(isNaN(v))v=0;p[inp.dataset.k]=v;renderCockpit();renderDashboard();});
-document.getElementById('resetData').addEventListener('click',()=>{PROG=JSON.parse(JSON.stringify(DEFAULTS));renderDataTable();fillProgSel();renderDashboardOptions();renderCockpit();renderDashboard();document.getElementById('uploadMsg').textContent="Reset to defaults.";});
+  const p=PROG.find(x=>x.id===inp.dataset.id);let v=parseFloat(inp.value);if(isNaN(v))v=0;p[inp.dataset.k]=v;renderCockpit();renderDashboard();renderDrilldown();});
+document.getElementById('resetData').addEventListener('click',()=>{PROG=JSON.parse(JSON.stringify(DEFAULTS));renderDataTable();fillProgSel();renderDashboardOptions();renderCockpit();renderDashboard();renderDrilldown();document.getElementById('uploadMsg').textContent="Reset to defaults.";});
 
 /* CSV template + upload */
 function toCSV(){
@@ -1100,7 +1339,7 @@ function parseCSV(text){
 }
 function handleFile(file){
   const rd=new FileReader();
-  rd.onload=ev=>{try{const n=parseCSV(ev.target.result);renderDataTable();fillProgSel();renderDashboardOptions();renderCockpit();renderDashboard();
+  rd.onload=ev=>{try{const n=parseCSV(ev.target.result);renderDataTable();fillProgSel();renderDashboardOptions();renderCockpit();renderDashboard();renderDrilldown();
     document.getElementById('uploadMsg').textContent=`Loaded ${n} program row(s) from ${file.name}.`;}
     catch(err){document.getElementById('uploadMsg').textContent="Could not parse CSV — check the column headers.";}};
   rd.readAsText(file);
@@ -1274,7 +1513,7 @@ const sources=[
 document.getElementById('srcList').innerHTML=sources.map(s=>`<div class="src"><a href="${s[1]}" target="_blank" rel="noopener">${s[0]}</a></div>`).join('');
 
 /* ===== init ===== */
-fillProgSel();renderDataTable();initDashboard();renderDashboard();renderCockpit();activateTab(initialView(),{updateHash:false,scroll:false});
+fillProgSel();renderDataTable();initDashboard();initDrilldown();renderDashboard();renderCockpit();activateTab(initialView(),{updateHash:false,scroll:false});
 const tipPopover=document.createElement('div');
 tipPopover.className='tip-popover';
 document.body.appendChild(tipPopover);
