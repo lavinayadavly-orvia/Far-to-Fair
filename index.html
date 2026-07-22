@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PSP/PAP Program Impact Cockpit — India</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
 <script>/*!
  * Chart.js v4.4.1
  * https://www.chartjs.org
@@ -35,8 +37,8 @@
   @media(max-width:760px){.wrap{padding:0 18px}}
   header.top{background:#fff;border-bottom:1px solid var(--border)}
   header.top .wrap{height:52px;display:flex;align-items:center;gap:16px}
-  .brand{font-size:14px;font-weight:820;letter-spacing:.02em;color:var(--text)}
-  .brand::before{content:"";display:inline-block;width:18px;height:2px;background:var(--teal);border-radius:2px;margin-right:10px;vertical-align:middle}
+  .brand{display:inline-flex;align-items:center;gap:10px;font-size:14px;font-weight:820;letter-spacing:.02em;color:var(--text)}
+  .brand-mark{width:28px;height:28px;display:block}
   nav.tabs{position:sticky;top:0;z-index:40;background:rgba(252,252,251,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
   nav.tabs .wrap{display:flex;gap:2px;overflow-x:auto}
   .tab{padding:17px 22px;font-size:14.5px;font-weight:650;color:var(--text2);border:none;background:none;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent}
@@ -268,7 +270,7 @@
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <div class="brand">Far-to-Fair</div>
+  <div class="brand"><img class="brand-mark" src="assets/favicon.svg" alt="" aria-hidden="true">Far-to-Fair</div>
 </div></header>
 
 <nav class="tabs"><div class="wrap" id="tabbar">
