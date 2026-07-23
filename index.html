@@ -157,7 +157,7 @@
   .evidencecard b{display:block;font-size:12px;margin-bottom:4px}
   .evidencecard span{font-size:11.5px;color:var(--text2)}
   .dashboard-shell{display:grid;gap:48px}
-  .dashboard-frame,.drill-frame{min-height:calc(100svh - 156px);display:flex;flex-direction:column;justify-content:center;gap:16px;scroll-margin-top:74px;break-inside:avoid}
+  .dashboard-frame,.drill-frame{min-height:calc(100svh - 156px);display:flex;flex-direction:column;justify-content:center;gap:16px;scroll-margin-top:74px;break-inside:avoid;position:relative}
   .decision-frame{gap:12px}
   .dashboard-frame>*,
   .drill-frame>*{min-width:0}
@@ -167,7 +167,10 @@
   .chart-frame h3.blk,.drill-frame h3.blk{flex:0 0 auto;margin-top:2px}
   .chart-frame .chartbox{height:clamp(300px,calc(100svh - 318px),430px);flex:1 1 auto}
   .drill-frame .chartbox.sm{height:clamp(280px,calc(100svh - 330px),400px);flex:1 1 auto}
-  @media(max-width:1100px){.dashboard-frame,.drill-frame{min-height:auto;justify-content:start;padding:18px 0}.chart-frame .chartbox,.drill-frame .chartbox.sm{height:340px}.dashboard-shell,.drill-shell{gap:22px}}
+  .frame-cue{position:absolute;left:50%;bottom:-40px;transform:translateX(-50%);border:1px solid rgba(14,138,138,.18);background:rgba(255,255,255,.86);backdrop-filter:blur(10px);color:var(--teal);border-radius:999px;padding:8px 13px;font-size:12px;font-weight:850;font-family:inherit;letter-spacing:.02em;cursor:pointer;box-shadow:0 12px 34px rgba(18,56,60,.09);display:inline-flex;align-items:center;gap:8px;z-index:3}
+  .frame-cue::after{content:"↓";font-size:14px;line-height:1;color:var(--s3)}
+  .frame-cue:hover{border-color:rgba(216,63,135,.28);color:var(--s3)}
+  @media(max-width:1100px){.dashboard-frame,.drill-frame{min-height:auto;justify-content:start;padding:18px 0}.chart-frame .chartbox,.drill-frame .chartbox.sm{height:340px}.dashboard-shell,.drill-shell{gap:22px}.frame-cue{position:static;transform:none;align-self:center;margin-top:4px}}
   .dash-command{display:grid;grid-template-columns:minmax(420px,1fr) minmax(320px,auto);gap:28px;align-items:end;padding:20px 22px 22px;border:1px solid var(--grid);border-radius:10px;background:linear-gradient(135deg,rgba(14,138,138,.055),rgba(244,124,44,.045) 48%,rgba(216,63,135,.05));box-shadow:0 10px 36px rgba(18,56,60,.045)}
   @media(max-width:920px){.dash-command{grid-template-columns:1fr}}
   .dash-title{display:grid;gap:6px}
@@ -450,9 +453,10 @@
         <div class="dash-summary" id="companySummary"></div>
         <div class="impact-strip" id="companyTiles"></div>
       </div>
+      <button class="frame-cue" type="button" data-scroll-target="dashboardCharts">Charts below</button>
     </div>
 
-    <div class="dashboard-frame chart-frame dash-grid">
+    <div class="dashboard-frame chart-frame dash-grid" id="dashboardCharts">
       <div class="card chart-card">
         <h3 class="blk" style="margin-top:2px">Where impact is coming from</h3>
         <div class="chartbox"><canvas id="companyImpactChart"></canvas></div>
@@ -461,9 +465,10 @@
         <h3 class="blk" style="margin-top:2px">Market pressure</h3>
         <div class="chartbox"><canvas id="companyRiskChart"></canvas></div>
       </div>
+      <button class="frame-cue" type="button" data-scroll-target="dashboardDetails">Regional view</button>
     </div>
 
-    <div class="dashboard-frame detail-frame dash-grid">
+    <div class="dashboard-frame detail-frame dash-grid" id="dashboardDetails">
       <div class="card">
         <h3 class="blk" style="margin-top:2px">Regional access signal</h3>
         <div class="region-grid" id="regionGrid"></div>
@@ -506,9 +511,10 @@
       <div class="program-filter" id="drillProgramFilter" aria-label="Filter drilldown by program"></div>
 
       <div class="metric-ribbon" id="drillMetrics"></div>
+      <button class="frame-cue" type="button" data-scroll-target="drillCharts">City chart</button>
     </div>
 
-    <div class="drill-frame chart-frame drill-grid">
+    <div class="drill-frame chart-frame drill-grid" id="drillCharts">
       <div class="card chart-card">
         <h3 class="blk" style="margin-top:2px">City impact spread</h3>
         <div class="chartbox sm"><canvas id="cityImpactChart"></canvas></div>
@@ -1032,6 +1038,12 @@ function resolveHomeSearch(q){
   return company?{company,programId:"__all__"}:null;
 }
 document.addEventListener('click',e=>{
+  const cue=e.target.closest('[data-scroll-target]');
+  if(cue){
+    const target=document.getElementById(cue.dataset.scrollTarget);
+    if(target)target.scrollIntoView({behavior:'smooth',block:'start'});
+    return;
+  }
   const b=e.target.closest('[data-jump]');
   if(!b)return;
   activateTab(b.dataset.jump);
