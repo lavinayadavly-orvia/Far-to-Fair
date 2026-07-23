@@ -167,8 +167,10 @@
   .company-search{display:grid;grid-template-columns:minmax(220px,320px) auto;gap:10px;align-items:center}
   @media(max-width:560px){.company-search{grid-template-columns:1fr}}
   .company-search select{width:100%;min-width:0;padding:12px 36px 12px 13px;border-radius:7px;border:1px solid rgba(14,138,138,.18);background:#fff;color:var(--text);font-size:15px;font-weight:700;font-family:inherit;box-shadow:0 8px 22px rgba(18,56,60,.045)}
-  .company-search button{padding:12px 15px;border-radius:7px;border:1px solid var(--teal);background:linear-gradient(135deg,var(--teal),#0aa0a0);color:#fff;font-size:13px;font-weight:760;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 10px 24px rgba(14,138,138,.18);transition:transform .16s ease,box-shadow .16s ease}
-  .company-search button:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(14,138,138,.24)}
+  .export-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .export-actions button{padding:12px 14px;border-radius:7px;border:1px solid var(--teal);background:linear-gradient(135deg,var(--teal),#0aa0a0);color:#fff;font-size:13px;font-weight:760;cursor:pointer;font-family:inherit;white-space:nowrap;box-shadow:0 10px 24px rgba(14,138,138,.18);transition:transform .16s ease,box-shadow .16s ease}
+  .export-actions button.secondary{border-color:rgba(216,63,135,.28);background:linear-gradient(135deg,#fff,#fdeaf4);color:var(--critical);box-shadow:0 10px 24px rgba(216,63,135,.10)}
+  .export-actions button:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(14,138,138,.24)}
   .program-filter{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
   .program-filter:empty{display:none}
   .program-filter button{border:1px solid var(--border);background:#fff;color:var(--text2);border-radius:6px;padding:9px 11px;font-size:12.5px;font-weight:780;cursor:pointer;font-family:inherit;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease,background .16s ease}
@@ -362,7 +364,10 @@
       <div class="search-card">
         <div class="company-search">
           <select id="companySearch" aria-label="Select pharma company"></select>
-          <button id="companyRun">Assess</button>
+          <div class="export-actions">
+            <button id="downloadPdf" type="button">PDF report</button>
+            <button id="downloadExcel" class="secondary" type="button">Excel data</button>
+          </div>
         </div>
       </div>
     </div>
@@ -918,8 +923,9 @@ function matchCompany(q){
 }
 function initDashboard(){
   renderDashboardOptions();
-  document.getElementById('companyRun').addEventListener('click',()=>renderDashboard(document.getElementById('companySearch').value));
   document.getElementById('companySearch').addEventListener('change',e=>renderDashboard(e.target.value));
+  document.getElementById('downloadPdf').addEventListener('click',downloadDashboardPdf);
+  document.getElementById('downloadExcel').addEventListener('click',downloadDashboardExcel);
 }
 function renderDashboardOptions(){
   const list=document.getElementById('companySearch');
@@ -1088,6 +1094,119 @@ function renderDashboard(q){
   renderCompanyPrograms(programs);
   document.getElementById('companyNarrative').innerHTML=companyNarrative(DASH_COMPANY,programs,a,b,erosionPct);
   saveAppState();
+}
+function dashboardExportData(){
+  const programs=programSet(DASH_COMPANY,DASH_PROGRAM);
+  const a=aggregatePrograms(programs,false);
+  const b=aggregatePrograms(programs,true);
+  const erosionPct=a.grossProfit>0?Math.max(0,Math.round((1-b.grossProfit/a.grossProfit)*100)):0;
+  const retainedRate=a.N>0?a.retained/a.N*100:0;
+  const pressure=erosionPct>55?"high":erosionPct>25?"moderate":"low";
+  const drivers=strongestImpactDriver(programs);
+  return {scope:programScopeLabel(DASH_COMPANY,DASH_PROGRAM),company:DASH_COMPANY,programs,a,b,erosionPct,retainedRate,pressure,drivers};
+}
+function slug(s){return String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'')||'readout';}
+function downloadBlob(name,type,content){
+  const blob=content instanceof Blob?content:new Blob([content],{type});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),500);
+}
+function exportRows(){
+  const d=dashboardExportData();
+  const rows=[
+    ["Scope",d.scope],
+    ["Company",d.company],
+    ["Programs in view",d.programs.length],
+    ["Enrolled patients",Math.round(d.a.N)],
+    ["Patients retained",Math.round(d.a.retained)],
+    ["Retained above baseline",d.retainedRate.toFixed(1)+"%"],
+    ["Affordability relief",money(d.a.oopRelieved)],
+    ["OOP relief rupees",Math.round(d.a.oopRelieved)],
+    ["Program cost",money(d.a.progCost)],
+    ["Program cost rupees",Math.round(d.a.progCost)],
+    ["Market-tested value",money(d.b.grossProfit)],
+    ["Market-tested value rupees",Math.round(d.b.grossProfit)],
+    ["Risk haircut",d.erosionPct+"%"],
+    ["Market pressure",d.pressure],
+    ["Retained-patient driver",d.drivers.retained?.p.name||"not available"],
+    ["Affordability driver",d.drivers.relief?.p.name||"not available"]
+  ];
+  const programRows=d.programs.map(p=>{const r=impact(p,false);return [
+    p.co,p.name,p.ta,p.maturity,p.enrolled,Math.round(r.retained),Math.round(r.oopRelieved),Math.round(r.progCost),Math.round(r.grossProfit),r.roi.toFixed(2)
+  ];});
+  return {d,summaryRows:rows,programRows};
+}
+function downloadDashboardExcel(){
+  const {d,summaryRows,programRows}=exportRows();
+  const esc=v=>String(v).replace(/[&<>]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[ch]));
+  const table=(title,headers,rows)=>`<h2>${esc(title)}</h2><table><thead><tr>${headers.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+  const html=`<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif}h1{color:#0e8a8a}h2{margin-top:22px}table{border-collapse:collapse}th,td{border:1px solid #d9cbd7;padding:6px 8px;text-align:left}th{background:#eaf8f6}</style></head><body>
+    <h1>Far-to-Fair Market Access Readout</h1>
+    <p>${esc(d.scope)} · ${new Date().toLocaleDateString('en-IN')}</p>
+    ${table('Executive summary',['Metric','Value'],summaryRows)}
+    ${table('Program detail',['Company','Program','Therapy area','Maturity','Enrolled','Patients retained','OOP relief ₹','Program cost ₹','Revenue defended ₹','ROI'],programRows)}
+  </body></html>`;
+  downloadBlob(`far-to-fair-${slug(d.scope)}.xls`,'application/vnd.ms-excel;charset=utf-8',html);
+}
+function pdfText(s){return String(s).replace(/₹/g,'INR ').replace(/[^\x20-\x7E]/g,' ');}
+function pdfEscape(s){return pdfText(s).replace(/[\\()]/g,'\\$&');}
+function makeSimplePdf(lines){
+  const pageW=595,pageH=842,margin=44,lineH=15;
+  const chunks=[];let page=[];
+  lines.forEach(line=>{if(page.length>=48){chunks.push(page);page=[];}page.push(line);});
+  if(page.length)chunks.push(page);
+  const objects=[];
+  function add(obj){objects.push(obj);return objects.length;}
+  const catalogId=add('');const pagesId=add('');
+  const fontId=add('<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>');
+  const pageIds=[];
+  chunks.forEach(chunk=>{
+    let y=pageH-margin;
+    const content=['BT','/F1 11 Tf','1 0 0 1 0 0 Tm'];
+    chunk.forEach((line,i)=>{
+      const size=i===0?18:(line.startsWith('Section:')?13:11);
+      content.push(`/F1 ${size} Tf`);
+      content.push(`${margin} ${y} Td (${pdfEscape(line)}) Tj`);
+      content.push(`${-margin} ${-lineH} Td`);
+      y-=lineH;
+    });
+    content.push('ET');
+    const stream=content.join('\n');
+    const contentId=add(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
+    const pageId=add(`<< /Type /Page /Parent ${pagesId} 0 R /MediaBox [0 0 ${pageW} ${pageH}] /Resources << /Font << /F1 ${fontId} 0 R >> >> /Contents ${contentId} 0 R >>`);
+    pageIds.push(pageId);
+  });
+  objects[catalogId-1]=`<< /Type /Catalog /Pages ${pagesId} 0 R >>`;
+  objects[pagesId-1]=`<< /Type /Pages /Kids [${pageIds.map(id=>`${id} 0 R`).join(' ')}] /Count ${pageIds.length} >>`;
+  let pdf='%PDF-1.4\n';
+  const offsets=[0];
+  objects.forEach((obj,i)=>{offsets[i+1]=pdf.length;pdf+=`${i+1} 0 obj\n${obj}\nendobj\n`;});
+  const xref=pdf.length;
+  pdf+=`xref\n0 ${objects.length+1}\n0000000000 65535 f \n`;
+  for(let i=1;i<=objects.length;i++)pdf+=String(offsets[i]).padStart(10,'0')+' 00000 n \n';
+  pdf+=`trailer\n<< /Size ${objects.length+1} /Root ${catalogId} 0 R >>\nstartxref\n${xref}\n%%EOF`;
+  return new Blob([pdf],{type:'application/pdf'});
+}
+function downloadDashboardPdf(){
+  const {d,summaryRows,programRows}=exportRows();
+  const answer=document.querySelector('#dashboardAnswers .answer-card .a')?.textContent||'Current readout';
+  const lines=[
+    'Far-to-Fair Market Access Readout',
+    `${d.scope} | ${new Date().toLocaleDateString('en-IN')}`,
+    '',
+    `Executive answer: ${answer}`,
+    '',
+    'Section: Summary metrics',
+    ...summaryRows.map(r=>`${r[0]}: ${r[1]}`),
+    '',
+    'Section: Program detail',
+    ...programRows.map(r=>`${r[1]} | ${r[2]} | ${r[3]} | enrolled ${fN(r[4])} | retained ${fN(r[5])} | OOP ${money(r[6])} | ROI ${r[9]}x`),
+    '',
+    'Note: Scenario estimates are directional until internal data is loaded.'
+  ];
+  downloadBlob(`far-to-fair-${slug(d.scope)}.pdf`,'application/pdf',makeSimplePdf(lines));
 }
 function renderCompanyImpactChart(programs){
   const rows=programs.map(p=>({p,r:impact(p,false)})).sort((x,y)=>y.r.retained-x.r.retained);
