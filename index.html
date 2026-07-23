@@ -720,20 +720,20 @@
 <script>
 /* ===== PROGRAM DATA (defaults, editable) ===== */
 const DEFAULTS=[
- {id:"bluetree",co:"Roche",name:"Blue Tree Program",ta:"Oncology",maturity:"eroding",policy:0.6,enrolled:40000,monthlyPrice:100000,progCostPerPt:45000,persistWith:14,persistWithout:5,freeMonths:4,oopRed:60,wouldAbandon:55,attribution:0.70,margin:75,lyFactor:0.6},
- {id:"gipap",co:"Novartis",name:"GIPAP / CMLPath to Care",ta:"Oncology (CML)",maturity:"commoditized",policy:0.3,enrolled:9000,monthlyPrice:6000,progCostPerPt:72000,persistWith:48,persistWithout:8,freeMonths:48,oopRed:100,wouldAbandon:70,attribution:0.85,margin:70,lyFactor:0.9},
- {id:"noa",co:"Novartis",name:"Novartis Oncology Access",ta:"Oncology",maturity:"protected",policy:0.4,enrolled:5000,monthlyPrice:120000,progCostPerPt:60000,persistWith:12,persistWithout:5,freeMonths:3,oopRed:70,wouldAbandon:60,attribution:0.70,margin:75,lyFactor:0.5},
- {id:"entresto",co:"Novartis",name:"Entresto affordability scenario",ta:"Cardiovascular",maturity:"eroding",policy:0.5,enrolled:35000,monthlyPrice:3000,progCostPerPt:1500,persistWith:18,persistWithout:9,freeMonths:0,oopRed:40,wouldAbandon:45,attribution:0.55,margin:70,lyFactor:0.3},
- {id:"lungs",co:"AstraZeneca",name:"LuNGS Alliance (free NGS)",ta:"Oncology (Dx)",maturity:"protected",policy:0.5,enrolled:8000,monthlyPrice:70000,progCostPerPt:8000,persistWith:15,persistWithout:5,freeMonths:0,oopRed:35,wouldAbandon:55,attribution:0.60,margin:40,lyFactor:0.5},
- {id:"pfizerpap",co:"Pfizer",name:"Pfizer PAP India (buy-and-benefit)",ta:"Oncology",maturity:"protected",policy:0.4,enrolled:12000,monthlyPrice:150000,progCostPerPt:50000,persistWith:16,persistWithout:4,freeMonths:6,oopRed:55,wouldAbandon:65,attribution:0.70,margin:82,lyFactor:0.5},
- {id:"saath7",co:"Sanofi",name:"Saath7 diabetes support",ta:"Diabetes",maturity:"commoditized",policy:0.6,enrolled:100000,monthlyPrice:2000,progCostPerPt:1200,persistWith:24,persistWithout:12,freeMonths:0,oopRed:15,wouldAbandon:40,attribution:0.55,margin:65,lyFactor:0.2},
- {id:"incap",co:"Sanofi",name:"InCAP rare-disease charitable access",ta:"Rare disease",maturity:"protected",policy:0.3,enrolled:115,monthlyPrice:800000,progCostPerPt:9600000,persistWith:36,persistWithout:2,freeMonths:36,oopRed:100,wouldAbandon:85,attribution:0.90,margin:60,lyFactor:0.7},
- {id:"disha",co:"Sanofi",name:"Rare-disease diagnostic support",ta:"Rare disease (Dx)",maturity:"protected",policy:0.3,enrolled:1000,monthlyPrice:12000,progCostPerPt:12000,persistWith:1,persistWithout:0,freeMonths:0,oopRed:100,wouldAbandon:35,attribution:0.45,margin:0,lyFactor:0.08},
- {id:"bedaquiline",co:"Johnson & Johnson",name:"Bedaquiline MDR-TB access",ta:"Tuberculosis",maturity:"protected",policy:0.7,enrolled:12000,monthlyPrice:6000,progCostPerPt:28000,persistWith:6,persistWithout:2,freeMonths:6,oopRed:100,wouldAbandon:50,attribution:0.75,margin:50,lyFactor:0.8},
- {id:"sparsh",co:"Dr. Reddy's",name:"Sparsh chemotherapy assistance",ta:"Oncology",maturity:"eroding",policy:0.5,enrolled:6000,monthlyPrice:100000,progCostPerPt:40000,persistWith:15,persistWithout:5,freeMonths:9,oopRed:50,wouldAbandon:60,attribution:0.65,margin:70,lyFactor:0.4},
- {id:"cipla",co:"Cipla",name:"Cipla Palliative Care",ta:"Palliative",maturity:"commoditized",policy:0.4,enrolled:26000,monthlyPrice:0,progCostPerPt:15000,persistWith:9,persistWithout:3,freeMonths:0,oopRed:100,wouldAbandon:50,attribution:0.80,margin:0,lyFactor:0.15},
- {id:"biocon",co:"Biocon",name:"BRIDGE-1 + CANMAb affordability",ta:"Diabetes / Oncology",maturity:"commoditized",policy:0.5,enrolled:1000,monthlyPrice:1500,progCostPerPt:18000,persistWith:36,persistWithout:6,freeMonths:36,oopRed:100,wouldAbandon:70,attribution:0.80,margin:40,lyFactor:0.6},
- {id:"lupin",co:"Lupin",name:"Digital adherence (LYFE/Adhero)",ta:"Cardiac / Respiratory",maturity:"commoditized",policy:0.5,enrolled:15000,monthlyPrice:3000,progCostPerPt:6000,persistWith:20,persistWithout:10,freeMonths:0,oopRed:15,wouldAbandon:40,attribution:0.60,margin:65,lyFactor:0.3}
+{id:"bluetree",co:"Roche",name:"Blue Tree Program",ta:"Oncology",maturity:"eroding",policy:0.6,enrolled:420,monthlyPrice:100000,progCostPerPt:45000,persistWith:14,persistWithout:5,freeMonths:4,oopRed:60,wouldAbandon:55,attribution:0.70,margin:75,lyFactor:0.6},
+{id:"gipap",co:"Novartis",name:"GIPAP / CMLPath to Care",ta:"Oncology (CML)",maturity:"commoditized",policy:0.3,enrolled:170,monthlyPrice:6000,progCostPerPt:72000,persistWith:48,persistWithout:8,freeMonths:48,oopRed:100,wouldAbandon:70,attribution:0.85,margin:70,lyFactor:0.9},
+{id:"noa",co:"Novartis",name:"Novartis Oncology Access",ta:"Oncology",maturity:"protected",policy:0.4,enrolled:120,monthlyPrice:120000,progCostPerPt:60000,persistWith:12,persistWithout:5,freeMonths:3,oopRed:70,wouldAbandon:60,attribution:0.70,margin:75,lyFactor:0.5},
+{id:"entresto",co:"Novartis",name:"Entresto affordability scenario",ta:"Cardiovascular",maturity:"eroding",policy:0.5,enrolled:210,monthlyPrice:3000,progCostPerPt:1500,persistWith:18,persistWithout:9,freeMonths:0,oopRed:40,wouldAbandon:45,attribution:0.55,margin:70,lyFactor:0.3},
+{id:"lungs",co:"AstraZeneca",name:"LuNGS Alliance (free NGS)",ta:"Oncology (Dx)",maturity:"protected",policy:0.5,enrolled:380,monthlyPrice:70000,progCostPerPt:8000,persistWith:15,persistWithout:5,freeMonths:0,oopRed:35,wouldAbandon:55,attribution:0.60,margin:40,lyFactor:0.5},
+{id:"pfizerpap",co:"Pfizer",name:"Pfizer PAP India (buy-and-benefit)",ta:"Oncology",maturity:"protected",policy:0.4,enrolled:420,monthlyPrice:150000,progCostPerPt:50000,persistWith:16,persistWithout:4,freeMonths:6,oopRed:55,wouldAbandon:65,attribution:0.70,margin:82,lyFactor:0.5},
+{id:"saath7",co:"Sanofi",name:"Saath7 diabetes support",ta:"Diabetes",maturity:"commoditized",policy:0.6,enrolled:360,monthlyPrice:2000,progCostPerPt:1200,persistWith:24,persistWithout:12,freeMonths:0,oopRed:15,wouldAbandon:40,attribution:0.55,margin:65,lyFactor:0.2},
+{id:"incap",co:"Sanofi",name:"InCAP rare-disease charitable access",ta:"Rare disease",maturity:"protected",policy:0.3,enrolled:55,monthlyPrice:800000,progCostPerPt:9600000,persistWith:36,persistWithout:2,freeMonths:36,oopRed:100,wouldAbandon:85,attribution:0.90,margin:60,lyFactor:0.7},
+{id:"disha",co:"Sanofi",name:"Rare-disease diagnostic support",ta:"Rare disease (Dx)",maturity:"protected",policy:0.3,enrolled:85,monthlyPrice:12000,progCostPerPt:12000,persistWith:1,persistWithout:0,freeMonths:0,oopRed:100,wouldAbandon:35,attribution:0.45,margin:0,lyFactor:0.08},
+{id:"bedaquiline",co:"Johnson & Johnson",name:"Bedaquiline MDR-TB access",ta:"Tuberculosis",maturity:"protected",policy:0.7,enrolled:420,monthlyPrice:6000,progCostPerPt:28000,persistWith:6,persistWithout:2,freeMonths:6,oopRed:100,wouldAbandon:50,attribution:0.75,margin:50,lyFactor:0.8},
+{id:"sparsh",co:"Dr. Reddy's",name:"Sparsh chemotherapy assistance",ta:"Oncology",maturity:"eroding",policy:0.5,enrolled:360,monthlyPrice:100000,progCostPerPt:40000,persistWith:15,persistWithout:5,freeMonths:9,oopRed:50,wouldAbandon:60,attribution:0.65,margin:70,lyFactor:0.4},
+{id:"cipla",co:"Cipla",name:"Cipla Palliative Care",ta:"Palliative",maturity:"commoditized",policy:0.4,enrolled:500,monthlyPrice:0,progCostPerPt:15000,persistWith:9,persistWithout:3,freeMonths:0,oopRed:100,wouldAbandon:50,attribution:0.80,margin:0,lyFactor:0.15},
+{id:"biocon",co:"Biocon",name:"BRIDGE-1 + CANMAb affordability",ta:"Diabetes / Oncology",maturity:"commoditized",policy:0.5,enrolled:250,monthlyPrice:1500,progCostPerPt:18000,persistWith:36,persistWithout:6,freeMonths:36,oopRed:100,wouldAbandon:70,attribution:0.80,margin:40,lyFactor:0.6},
+{id:"lupin",co:"Lupin",name:"Digital adherence (LYFE/Adhero)",ta:"Cardiac / Respiratory",maturity:"commoditized",policy:0.5,enrolled:430,monthlyPrice:3000,progCostPerPt:6000,persistWith:20,persistWithout:10,freeMonths:0,oopRed:15,wouldAbandon:40,attribution:0.60,margin:65,lyFactor:0.3}
 ];
 let PROG=JSON.parse(JSON.stringify(DEFAULTS));
 const NUMKEYS=["enrolled","monthlyPrice","progCostPerPt","persistWith","persistWithout","freeMonths","oopRed","wouldAbandon","attribution","margin","lyFactor"];
@@ -1530,11 +1530,11 @@ function renderNarr(rA,rB,p,isPort){
 
 /* ===== improvement levers ===== */
 const LEVERS=[
- {t:"Physician activation + digital onboarding",d:"Closes the enrollment gap",apply:p=>{p.enrolled=Math.round(p.enrolled*1.25);}},
+ {t:"Physician activation + digital onboarding",d:"Closes the enrollment gap",apply:p=>{p.enrolled=Math.min(500,Math.round(p.enrolled*1.25));}},
  {t:"Graduated taper (soften the cliff)",d:"Retains patients past the free phase",apply:p=>{p.freeMonths=Math.round(p.freeMonths*0.4);p.persistWith=Math.min(60,p.persistWith+4);}},
  {t:"Income means-testing + deeper subsidy",d:"More relief to the poorest",apply:p=>{p.oopRed=Math.min(100,p.oopRed+15);p.wouldAbandon=Math.min(95,p.wouldAbandon+5);}},
  {t:"Digital adherence (reminders / DTx)",d:"Extends persistence",apply:p=>{p.persistWith=Math.min(60,p.persistWith+4);p.progCostPerPt+=2000;}},
- {t:"Diagnostic-first gating",d:"Right patient, first time",apply:p=>{p.enrolled=Math.round(p.enrolled*1.10);p.progCostPerPt+=1500;}},
+ {t:"Diagnostic-first gating",d:"Right patient, first time",apply:p=>{p.enrolled=Math.min(500,Math.round(p.enrolled*1.10));p.progCostPerPt+=1500;}},
  {t:"Integrate with PM-JAY / insurance",d:"Shares cost, cuts program spend",apply:p=>{p.progCostPerPt=Math.round(p.progCostPerPt*0.7);}}
 ];
 function renderLevers(){
