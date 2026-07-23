@@ -31,6 +31,7 @@
     --shadow:0 1px 2px rgba(11,11,11,.035),0 10px 28px rgba(11,11,11,.045);--radius:8px;
   }
   *{box-sizing:border-box}html,body{margin:0;padding:0}
+  html{scroll-padding-top:74px}
   body{background:var(--page);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;position:relative}
   body::before{content:"";position:fixed;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--s2),var(--s3));z-index:80;pointer-events:none}
   a{color:var(--s1);text-decoration:none}a:hover{text-decoration:underline}
@@ -46,7 +47,7 @@
   .tab:hover{color:var(--text);background:linear-gradient(180deg,rgba(14,138,138,.04),rgba(216,63,135,.035))}
   .tab.active{color:var(--teal);border-bottom-color:transparent;background:linear-gradient(180deg,rgba(14,138,138,.08),rgba(255,255,255,0))}
   .tab.active::after{content:"";position:absolute;left:18px;right:18px;bottom:-1px;height:3px;border-radius:999px;background:linear-gradient(90deg,var(--teal),var(--s2),var(--s3));box-shadow:0 0 14px rgba(216,63,135,.22)}
-  main{padding:34px 0 90px}
+  main{padding:26px 0 90px}
   section.view{display:none;scroll-margin-top:82px}section.view.active{display:block}
   h2.sec{font-size:28px;margin:4px 0 8px;letter-spacing:-.01em}
   .lead{color:var(--text2);max-width:1040px;margin:0 0 26px;font-size:16px;line-height:1.6}
@@ -112,7 +113,7 @@
   .badge{display:inline-block;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:2px 8px;border-radius:6px;margin-left:6px}
   .badge.prot{background:#eaf8f6;color:#0e8a8a}.badge.erod{background:#fff0e7;color:#b85f13}.badge.comm{background:#fdeaf4;color:#b92870}
 
-  .chartbox{position:relative;height:390px}
+  .chartbox{position:relative;height:390px;min-height:0}
   .chartbox.sm{height:320px}
   table{width:100%;border-collapse:collapse;font-size:12.5px}
   th,td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--grid)}
@@ -154,7 +155,18 @@
   .evidencecard{background:var(--surface);border:1px solid var(--grid);border-radius:10px;padding:12px}
   .evidencecard b{display:block;font-size:12px;margin-bottom:4px}
   .evidencecard span{font-size:11.5px;color:var(--text2)}
-  .dashboard-shell{display:grid;gap:20px}
+  .dashboard-shell{display:grid;gap:48px}
+  .dashboard-frame,.drill-frame{min-height:calc(100svh - 156px);display:flex;flex-direction:column;justify-content:center;gap:16px;scroll-margin-top:74px;break-inside:avoid}
+  .decision-frame{gap:12px}
+  .dashboard-frame>*,
+  .drill-frame>*{min-width:0}
+  .chart-frame,.detail-frame{align-items:stretch}
+  .chart-frame.dash-grid,.detail-frame.dash-grid,.drill-frame.drill-grid{display:grid}
+  .chart-frame .card,.drill-frame .card{display:flex;flex-direction:column;min-height:0}
+  .chart-frame h3.blk,.drill-frame h3.blk{flex:0 0 auto;margin-top:2px}
+  .chart-frame .chartbox{height:clamp(300px,calc(100svh - 318px),430px);flex:1 1 auto}
+  .drill-frame .chartbox.sm{height:clamp(280px,calc(100svh - 330px),400px);flex:1 1 auto}
+  @media(max-width:1100px){.dashboard-frame,.drill-frame{min-height:auto;justify-content:start;padding:18px 0}.chart-frame .chartbox,.drill-frame .chartbox.sm{height:340px}.dashboard-shell,.drill-shell{gap:22px}}
   .dash-command{display:grid;grid-template-columns:minmax(420px,1fr) minmax(320px,auto);gap:28px;align-items:end;padding:20px 22px 22px;border:1px solid var(--grid);border-radius:10px;background:linear-gradient(135deg,rgba(14,138,138,.055),rgba(244,124,44,.045) 48%,rgba(216,63,135,.05));box-shadow:0 10px 36px rgba(18,56,60,.045)}
   @media(max-width:920px){.dash-command{grid-template-columns:1fr}}
   .dash-title{display:grid;gap:6px}
@@ -237,8 +249,20 @@
   .text-action.primary{border-color:var(--teal);background:var(--teal);color:#fff}
   @media(max-width:760px){.next-read{grid-template-columns:1fr}.next-actions{justify-content:flex-start}}
   #dashboard .callout b{color:var(--text)}
-  .drill-shell{display:grid;gap:20px}
+  .drill-shell{display:grid;gap:48px}
   .drill-command{display:grid;grid-template-columns:minmax(0,1fr) minmax(420px,460px);gap:28px;align-items:end;padding:20px 22px 22px;border:1px solid var(--grid);border-radius:10px;background:linear-gradient(135deg,rgba(14,138,138,.055),rgba(244,124,44,.045) 48%,rgba(216,63,135,.05));box-shadow:0 10px 36px rgba(18,56,60,.045)}
+  #dashboard .decision-frame .dash-command{padding:16px 18px}
+  #dashboard .decision-frame .answer-card{padding:15px 17px}
+  #dashboard .decision-frame .answer-card .a{font-size:18px;line-height:1.14}
+  #dashboard .decision-frame .answer-card .why{font-size:12.5px;line-height:1.36;margin-top:7px}
+  #dashboard .decision-frame .answer-card .action{margin-top:9px}
+  #dashboard .decision-frame .dash-summary{padding:19px 22px;gap:10px}
+  #dashboard .decision-frame .dash-summary h3{font-size:24px}
+  #dashboard .decision-frame .dash-summary p{font-size:13.5px;line-height:1.42}
+  #dashboard .decision-frame .impact-tile{min-height:112px;padding:17px 18px}
+  #dashboard .decision-frame .impact-tile .v{font-size:27px;margin-top:10px}
+  #dashboard .decision-frame .impact-tile .s{font-size:12px;margin-top:8px}
+  @media(max-height:760px) and (min-width:1101px){.dashboard-frame,.drill-frame{min-height:calc(100svh - 142px);gap:12px}.dash-command,.drill-command{padding:16px 18px}.answer-card{padding:15px 17px}.answer-card .a{font-size:18px}.answer-card .why{font-size:12.5px}.dash-summary{padding:19px 22px}.impact-tile{min-height:118px;padding:18px}.impact-tile .v{font-size:27px}.chart-frame .chartbox{height:clamp(280px,calc(100svh - 306px),390px)}}
   @media(max-width:980px){.drill-command{grid-template-columns:1fr}}
   .drill-controls{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   @media(max-width:620px){.drill-controls{grid-template-columns:1fr}}
@@ -354,44 +378,46 @@
 <!-- ============ DASHBOARD ============ -->
 <section class="view active" id="dashboard">
   <div class="dashboard-shell">
-    <div class="dash-command">
-      <div class="dash-title">
-        <div class="overline">Market access dashboard</div>
-        <h2>Is the PAP materially improving access?</h2>
-        <p>Enter a manufacturer. The view returns the impact verdict, where it comes from, and what market pressure does to the case.</p>
-        <div class="model-status">Scenario mode · ready for internal data</div>
-      </div>
-      <div class="search-card">
-        <div class="company-search">
-          <select id="companySearch" aria-label="Select pharma company"></select>
-          <div class="export-actions">
-            <button id="downloadPdf" type="button">PDF report</button>
-            <button id="downloadExcel" class="secondary" type="button">Excel data</button>
+    <div class="dashboard-frame decision-frame">
+      <div class="dash-command">
+        <div class="dash-title">
+          <div class="overline">Market access dashboard</div>
+          <h2>Is the PAP materially improving access?</h2>
+          <p>Enter a manufacturer. The view returns the impact verdict, where it comes from, and what market pressure does to the case.</p>
+          <div class="model-status">Scenario mode · ready for internal data</div>
+        </div>
+        <div class="search-card">
+          <div class="company-search">
+            <select id="companySearch" aria-label="Select pharma company"></select>
+            <div class="export-actions">
+              <button id="downloadPdf" type="button">PDF report</button>
+              <button id="downloadExcel" class="secondary" type="button">Excel data</button>
+            </div>
           </div>
         </div>
       </div>
+
+      <div class="program-filter" id="dashboardProgramFilter" aria-label="Filter dashboard by program"></div>
+      <div class="answer-brief" id="dashboardAnswers"></div>
+
+      <div class="answer-panel">
+        <div class="dash-summary" id="companySummary"></div>
+        <div class="impact-strip" id="companyTiles"></div>
+      </div>
     </div>
 
-    <div class="program-filter" id="dashboardProgramFilter" aria-label="Filter dashboard by program"></div>
-    <div class="answer-brief" id="dashboardAnswers"></div>
-
-    <div class="answer-panel">
-      <div class="dash-summary" id="companySummary"></div>
-      <div class="impact-strip" id="companyTiles"></div>
-    </div>
-
-    <div class="dash-grid">
-      <div class="card">
+    <div class="dashboard-frame chart-frame dash-grid">
+      <div class="card chart-card">
         <h3 class="blk" style="margin-top:2px">Where impact is coming from</h3>
         <div class="chartbox"><canvas id="companyImpactChart"></canvas></div>
       </div>
-      <div class="card">
+      <div class="card chart-card">
         <h3 class="blk" style="margin-top:2px">Market pressure</h3>
         <div class="chartbox"><canvas id="companyRiskChart"></canvas></div>
       </div>
     </div>
 
-    <div class="dash-grid">
+    <div class="dashboard-frame detail-frame dash-grid">
       <div class="card">
         <h3 class="blk" style="margin-top:2px">Regional access signal</h3>
         <div class="region-grid" id="regionGrid"></div>
@@ -417,25 +443,27 @@
 <!-- ============ CITY & PATIENT ============ -->
 <section class="view" id="drilldown">
   <div class="drill-shell">
-    <div class="drill-command">
-      <div class="dash-title">
-        <div class="overline">City and patient impact</div>
-        <h2>Where is support actually changing the journey?</h2>
-        <p>Move from company impact to city leakage, then to patient-level intervention risk.</p>
-        <div class="model-status">Scenario cohort · city and patient records can be replaced with live operations data</div>
+    <div class="drill-frame decision-frame">
+      <div class="drill-command">
+        <div class="dash-title">
+          <div class="overline">City and patient impact</div>
+          <h2>Where is support actually changing the journey?</h2>
+          <p>Move from company impact to city leakage, then to patient-level intervention risk.</p>
+          <div class="model-status">Scenario cohort · city and patient records can be replaced with live operations data</div>
+        </div>
+        <div class="drill-controls">
+          <select id="drillCompany" aria-label="Select company for city drilldown"></select>
+          <select id="drillCity" aria-label="Select city for patient drilldown"></select>
+        </div>
       </div>
-      <div class="drill-controls">
-        <select id="drillCompany" aria-label="Select company for city drilldown"></select>
-        <select id="drillCity" aria-label="Select city for patient drilldown"></select>
-      </div>
+
+      <div class="program-filter" id="drillProgramFilter" aria-label="Filter drilldown by program"></div>
+
+      <div class="metric-ribbon" id="drillMetrics"></div>
     </div>
 
-    <div class="program-filter" id="drillProgramFilter" aria-label="Filter drilldown by program"></div>
-
-    <div class="metric-ribbon" id="drillMetrics"></div>
-
-    <div class="drill-grid">
-      <div class="card">
+    <div class="drill-frame chart-frame drill-grid">
+      <div class="card chart-card">
         <h3 class="blk" style="margin-top:2px">City impact spread</h3>
         <div class="chartbox sm"><canvas id="cityImpactChart"></canvas></div>
       </div>
