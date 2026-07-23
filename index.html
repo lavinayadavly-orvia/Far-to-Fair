@@ -35,6 +35,7 @@
   body{background:var(--page);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;position:relative}
   body::before{content:"";position:fixed;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--teal),var(--s2),var(--s3));z-index:80;pointer-events:none}
   a{color:var(--s1);text-decoration:none}a:hover{text-decoration:underline}
+  .sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   .wrap{width:100%;max-width:none;margin:0;padding:0 48px}
   @media(max-width:760px){.wrap{padding:0 18px}}
   header.top{background:#fff;border-bottom:1px solid var(--border)}
@@ -356,6 +357,29 @@
   .tip-popover.show{opacity:1;transform:translateY(0)}
   .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:8px;font-size:12px;color:var(--text2)}
   .legend .lg{display:flex;align-items:center;gap:6px}.legend .dot{width:11px;height:11px;border-radius:3px}
+  body[data-view="landing"],body[data-view="home"]{background:#fff}
+  body[data-view="landing"] header.top,body[data-view="landing"] nav.tabs,
+  body[data-view="home"] header.top,body[data-view="home"] nav.tabs{display:none}
+  body[data-view="landing"] main,body[data-view="home"] main{padding:0}
+  body[data-view="landing"] .workspace,body[data-view="home"] .workspace{padding-left:0;padding-right:0}
+  .entry-screen{min-height:100svh;display:grid;place-items:center;padding:42px 28px;background:
+    radial-gradient(circle at 20% 18%,rgba(14,138,138,.12),transparent 28%),
+    radial-gradient(circle at 82% 28%,rgba(216,63,135,.12),transparent 26%),
+    linear-gradient(135deg,#fff 0%,#fff7f1 52%,#f7fffe 100%)}
+  .entry-inner{text-align:center;display:grid;gap:30px;justify-items:center}
+  .entry-title{font-size:clamp(54px,9vw,132px);line-height:.9;font-weight:900;letter-spacing:0;color:var(--text)}
+  .entry-title span{display:block;background:linear-gradient(90deg,var(--teal),var(--s2),var(--s3));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .enter-button{border:0;border-radius:999px;padding:15px 34px;background:var(--text);color:#fff;font-size:15px;font-weight:850;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;font-family:inherit;box-shadow:0 18px 46px rgba(18,56,60,.18);transition:transform .18s ease,box-shadow .18s ease}
+  .enter-button:hover{transform:translateY(-2px);box-shadow:0 24px 62px rgba(18,56,60,.22)}
+  .home-screen{min-height:100svh;display:grid;place-items:center;padding:32px;background:
+    radial-gradient(circle at 50% 38%,rgba(14,138,138,.10),transparent 32%),
+    linear-gradient(180deg,#fff,#fff)}
+  .home-search{width:min(760px,calc(100vw - 48px));position:relative}
+  .home-search input{width:100%;height:72px;border:1px solid rgba(14,138,138,.22);border-radius:999px;background:#fff;padding:0 78px 0 32px;font-size:24px;font-weight:760;color:var(--text);font-family:inherit;box-shadow:0 18px 54px rgba(18,56,60,.10),0 0 0 10px rgba(14,138,138,.035)}
+  .home-search input:focus{outline:none;border-color:var(--teal);box-shadow:0 20px 60px rgba(18,56,60,.13),0 0 0 10px rgba(14,138,138,.08)}
+  .home-search.miss input{border-color:var(--critical);box-shadow:0 20px 60px rgba(216,63,135,.13),0 0 0 10px rgba(216,63,135,.07)}
+  .home-search button{position:absolute;right:9px;top:9px;width:54px;height:54px;border:0;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--s3));color:#fff;font-size:22px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 12px 30px rgba(14,138,138,.22)}
+  @media(max-width:620px){.entry-title{font-size:54px}.home-search input{height:62px;font-size:18px;padding-left:22px;padding-right:68px}.home-search button{width:46px;height:46px;font-size:18px}}
 </style>
 </head>
 <body>
@@ -364,7 +388,7 @@
 </div></header>
 
 <nav class="tabs"><div class="wrap" id="tabbar">
-  <button class="tab active" data-v="dashboard">Dashboard</button>
+  <button class="tab" data-v="dashboard">Dashboard</button>
   <button class="tab" data-v="drilldown">City &amp; Patient</button>
   <button class="tab" data-v="cockpit">Impact Cockpit</button>
   <button class="tab" data-v="intel">Market Reality</button>
@@ -375,8 +399,30 @@
 
 <main class="wrap workspace">
 
+<!-- ============ LANDING ============ -->
+<section class="view active" id="landing">
+  <div class="entry-screen">
+    <div class="entry-inner">
+      <h1 class="entry-title">Far To <span>fair</span></h1>
+      <button class="enter-button" id="enterPlatform" type="button">Enter</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOME ============ -->
+<section class="view" id="home">
+  <div class="home-screen">
+    <form class="home-search" id="homeSearchForm">
+      <label class="sr" for="homeSearch">Search company or program</label>
+      <input id="homeSearch" list="homeSearchOptions" autocomplete="off" placeholder="Search pharma or PAP/PSP" aria-label="Search pharma company or PAP/PSP program">
+      <datalist id="homeSearchOptions"></datalist>
+      <button type="submit" aria-label="Open dashboard">→</button>
+    </form>
+  </div>
+</section>
+
 <!-- ============ DASHBOARD ============ -->
-<section class="view active" id="dashboard">
+<section class="view" id="dashboard">
   <div class="dashboard-shell">
     <div class="dashboard-frame decision-frame">
       <div class="dash-command">
@@ -907,15 +953,17 @@ function renderActiveView(v){
   if(v==='cockpit')renderCockpit();
   if(v==='intel')renderIntel();
   if(v==='about')renderLeakageWaterfallChart();
+  if(v==='home')requestAnimationFrame(()=>document.getElementById('homeSearch')?.focus());
 }
 function activateTab(view,{updateHash=true,scroll=true}={}){
   const tab=document.querySelector(`.tab[data-v="${view}"]`);
   const panel=document.getElementById(view);
-  if(!tab||!panel)return false;
+  if(!panel)return false;
   document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  tab.classList.add('active');
+  if(tab)tab.classList.add('active');
   panel.classList.add('active');
+  document.body.dataset.view=view;
   if(updateHash&&location.hash!==`#${view}`)history.replaceState(null,"",`#${view}`);
   if(scroll)window.scrollTo({top:0,behavior:'smooth'});
   saveAppState(view);
@@ -925,12 +973,64 @@ function activateTab(view,{updateHash=true,scroll=true}={}){
 function initialView(){
   const hash=decodeURIComponent(location.hash.replace(/^#/,"")).trim();
   if(document.getElementById(hash))return hash;
-  const saved=readSavedState().view;
-  return document.getElementById(saved)?saved:"dashboard";
+  return "landing";
 }
 document.getElementById('tabbar').addEventListener('click',e=>{const b=e.target.closest('.tab');if(!b)return;
   activateTab(b.dataset.v);
 });
+function initEntryFlow(){
+  document.getElementById('enterPlatform')?.addEventListener('click',()=>activateTab('home'));
+  const form=document.getElementById('homeSearchForm');
+  const input=document.getElementById('homeSearch');
+  const options=document.getElementById('homeSearchOptions');
+  if(options)options.innerHTML=[
+    ...companyNames().map(n=>`<option value="${n}"></option>`),
+    ...PROG.map(p=>`<option value="${p.name}"></option>`)
+  ].join('');
+  function runHomeSearch(){
+    const hit=resolveHomeSearch(input?.value||"");
+    if(!hit){
+      form.classList.add('miss');
+      if(input){
+        input.value="";
+        input.placeholder="No match. Try company or PAP/PSP name";
+        input.focus();
+      }
+      setTimeout(()=>form.classList.remove('miss'),900);
+      return;
+    }
+    DASH_COMPANY=hit.company;
+    DASH_PROGRAM=hit.programId;
+    DRILL_COMPANY=hit.company;
+    DRILL_PROGRAM=hit.programId;
+    DRILL_CITY="__top__";
+    DRILL_PATIENT=0;
+    renderDashboardOptions();
+    fillProgSel();
+    activateTab('dashboard');
+  }
+  form?.addEventListener('submit',e=>{
+    e.preventDefault();
+    runHomeSearch();
+  });
+  input?.addEventListener('keydown',e=>{
+    if(e.key!=="Enter")return;
+    e.preventDefault();
+    runHomeSearch();
+  });
+}
+function resolveHomeSearch(q){
+  const clean=(q||"").trim().toLowerCase();
+  if(!clean)return null;
+  const exactCompany=companyNames().find(n=>n.toLowerCase()===clean);
+  if(exactCompany)return {company:exactCompany,programId:"__all__"};
+  const exactProgram=PROG.find(p=>p.name.toLowerCase()===clean||p.id.toLowerCase()===clean);
+  if(exactProgram)return {company:exactProgram.co,programId:exactProgram.id};
+  const program=PROG.find(p=>p.name.toLowerCase().includes(clean)||clean.includes(p.name.toLowerCase()));
+  if(program)return {company:program.co,programId:program.id};
+  const company=companyNames().find(n=>n.toLowerCase().includes(clean)||clean.includes(n.toLowerCase()));
+  return company?{company,programId:"__all__"}:null;
+}
 document.addEventListener('click',e=>{
   const b=e.target.closest('[data-jump]');
   if(!b)return;
@@ -1823,7 +1923,7 @@ document.getElementById('srcList').innerHTML=sources.map(s=>`<div class="src"><a
 
 /* ===== init ===== */
 if('scrollRestoration' in history)history.scrollRestoration='manual';
-loadAppState();fillProgSel();renderDataTable();initDashboard();initDrilldown();renderCockpit();activateTab(initialView(),{updateHash:false,scroll:true});
+loadAppState();fillProgSel();renderDataTable();initEntryFlow();initDashboard();initDrilldown();renderCockpit();activateTab(initialView(),{updateHash:false,scroll:true});
 const tipPopover=document.createElement('div');
 tipPopover.className='tip-popover';
 document.body.appendChild(tipPopover);
