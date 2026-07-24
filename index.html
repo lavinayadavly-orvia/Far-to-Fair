@@ -377,12 +377,16 @@
   .home-screen{min-height:100svh;display:grid;place-items:center;padding:32px;background:
     radial-gradient(circle at 50% 38%,rgba(14,138,138,.10),transparent 32%),
     linear-gradient(180deg,#fff,#fff)}
-  .home-search{width:min(760px,calc(100vw - 48px));position:relative}
+  .home-stack{display:grid;gap:18px;justify-items:center;width:min(800px,calc(100vw - 48px))}
+  .home-search{width:100%;position:relative}
   .home-search input{width:100%;height:72px;border:1px solid rgba(14,138,138,.22);border-radius:999px;background:#fff;padding:0 78px 0 32px;font-size:24px;font-weight:760;color:var(--text);font-family:inherit;box-shadow:0 18px 54px rgba(18,56,60,.10),0 0 0 10px rgba(14,138,138,.035)}
   .home-search input:focus{outline:none;border-color:var(--teal);box-shadow:0 20px 60px rgba(18,56,60,.13),0 0 0 10px rgba(14,138,138,.08)}
   .home-search.miss input{border-color:var(--critical);box-shadow:0 20px 60px rgba(216,63,135,.13),0 0 0 10px rgba(216,63,135,.07)}
   .home-search button{position:absolute;right:9px;top:9px;width:54px;height:54px;border:0;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--s3));color:#fff;font-size:22px;font-weight:900;cursor:pointer;font-family:inherit;box-shadow:0 12px 30px rgba(14,138,138,.22)}
-  @media(max-width:620px){.entry-title{font-size:54px}.home-search input{height:62px;font-size:18px;padding-left:22px;padding-right:68px}.home-search button{width:46px;height:46px;font-size:18px}}
+  .home-sections{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .home-sections button{border:1px solid rgba(14,138,138,.22);border-radius:999px;background:rgba(255,255,255,.82);color:var(--text);padding:11px 18px;font-size:14px;font-weight:850;font-family:inherit;cursor:pointer;box-shadow:0 10px 26px rgba(18,56,60,.07);transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease}
+  .home-sections button:hover{transform:translateY(-1px);border-color:rgba(216,63,135,.45);box-shadow:0 14px 34px rgba(216,63,135,.11)}
+  @media(max-width:620px){.entry-title{font-size:54px}.home-stack{width:calc(100vw - 36px);gap:14px}.home-search input{height:62px;font-size:18px;padding-left:22px;padding-right:68px}.home-search button{width:46px;height:46px;font-size:18px}.home-sections{gap:8px}.home-sections button{font-size:13px;padding:10px 14px}}
 </style>
 </head>
 <body>
@@ -416,12 +420,19 @@
 <!-- ============ HOME ============ -->
 <section class="view" id="home">
   <div class="home-screen">
-    <form class="home-search" id="homeSearchForm">
-      <label class="sr" for="homeSearch">Search company or program</label>
-      <input id="homeSearch" list="homeSearchOptions" autocomplete="off" placeholder="Search pharma or PAP/PSP" aria-label="Search pharma company or PAP/PSP program">
-      <datalist id="homeSearchOptions"></datalist>
-      <button type="submit" aria-label="Open dashboard">→</button>
-    </form>
+    <div class="home-stack">
+      <form class="home-search" id="homeSearchForm">
+        <label class="sr" for="homeSearch">Search company, program, or therapy area</label>
+        <input id="homeSearch" list="homeSearchOptions" autocomplete="off" placeholder="Search pharma, PAP/PSP, or therapy area" aria-label="Search pharma company, PAP/PSP program, or therapy area">
+        <datalist id="homeSearchOptions"></datalist>
+        <button type="submit" aria-label="Open dashboard">→</button>
+      </form>
+      <div class="home-sections" aria-label="Therapy areas">
+        <button type="button" data-home-query="Oncology">Oncology</button>
+        <button type="button" data-home-query="Rare diseases">Rare diseases</button>
+        <button type="button" data-home-query="Blood disorders">Blood disorders</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -802,7 +813,7 @@
 /* ===== PROGRAM DATA (defaults, editable) ===== */
 const DEFAULTS=[
 {id:"bluetree",co:"Roche",name:"Blue Tree Program",ta:"Oncology",maturity:"eroding",policy:0.6,enrolled:420,monthlyPrice:100000,progCostPerPt:45000,persistWith:14,persistWithout:5,freeMonths:4,oopRed:60,wouldAbandon:55,attribution:0.70,margin:75,lyFactor:0.6},
-{id:"gipap",co:"Novartis",name:"GIPAP / CMLPath to Care",ta:"Oncology (CML)",maturity:"commoditized",policy:0.3,enrolled:170,monthlyPrice:6000,progCostPerPt:72000,persistWith:48,persistWithout:8,freeMonths:48,oopRed:100,wouldAbandon:70,attribution:0.85,margin:70,lyFactor:0.9},
+{id:"gipap",co:"Novartis",name:"GIPAP / CMLPath to Care",ta:"Blood disorders (CML)",maturity:"commoditized",policy:0.3,enrolled:170,monthlyPrice:6000,progCostPerPt:72000,persistWith:48,persistWithout:8,freeMonths:48,oopRed:100,wouldAbandon:70,attribution:0.85,margin:70,lyFactor:0.9},
 {id:"noa",co:"Novartis",name:"Novartis Oncology Access",ta:"Oncology",maturity:"protected",policy:0.4,enrolled:120,monthlyPrice:120000,progCostPerPt:60000,persistWith:12,persistWithout:5,freeMonths:3,oopRed:70,wouldAbandon:60,attribution:0.70,margin:75,lyFactor:0.5},
 {id:"entresto",co:"Novartis",name:"Entresto affordability scenario",ta:"Cardiovascular",maturity:"eroding",policy:0.5,enrolled:210,monthlyPrice:3000,progCostPerPt:1500,persistWith:18,persistWithout:9,freeMonths:0,oopRed:40,wouldAbandon:45,attribution:0.55,margin:70,lyFactor:0.3},
 {id:"lungs",co:"AstraZeneca",name:"LuNGS Alliance (free NGS)",ta:"Oncology (Dx)",maturity:"protected",policy:0.5,enrolled:380,monthlyPrice:70000,progCostPerPt:8000,persistWith:15,persistWithout:5,freeMonths:0,oopRed:35,wouldAbandon:55,attribution:0.60,margin:40,lyFactor:0.5},
@@ -840,6 +851,11 @@ let DRILL_PATIENT=0;
 let DASH_PROGRAM="__all__";
 let DRILL_PROGRAM="__all__";
 const APP_STATE_KEY="farToFairState.v1";
+const THERAPY_ENTRY=[
+  {label:"Oncology",company:"Novartis",programId:"noa",terms:["oncology","cancer","cancer access","oncology pap","oncology psp"]},
+  {label:"Rare diseases",company:"Sanofi",programId:"incap",terms:["rare disease","rare diseases","orphan disease","orphan diseases","rare disease pap","rare disease psp"]},
+  {label:"Blood disorders",company:"Novartis",programId:"gipap",terms:["blood disorder","blood disorders","hematology","haematology","blood cancer","cml","chronic myeloid leukemia","chronic myeloid leukaemia"]}
+];
 
 const REGION_PROFILES={
   "Novartis":[["West",0.31],["North",0.27],["South",0.25],["East",0.17]],
@@ -991,6 +1007,7 @@ function initEntryFlow(){
   const input=document.getElementById('homeSearch');
   const options=document.getElementById('homeSearchOptions');
   if(options)options.innerHTML=[
+    ...THERAPY_ENTRY.map(t=>`<option value="${t.label}"></option>`),
     ...companyNames().map(n=>`<option value="${n}"></option>`),
     ...PROG.map(p=>`<option value="${p.name}"></option>`)
   ].join('');
@@ -1025,10 +1042,18 @@ function initEntryFlow(){
     e.preventDefault();
     runHomeSearch();
   });
+  document.querySelectorAll('[data-home-query]').forEach(button=>{
+    button.addEventListener('click',()=>{
+      if(input)input.value=button.dataset.homeQuery||"";
+      runHomeSearch();
+    });
+  });
 }
 function resolveHomeSearch(q){
   const clean=(q||"").trim().toLowerCase();
   if(!clean)return null;
+  const therapy=THERAPY_ENTRY.find(t=>t.label.toLowerCase()===clean||t.terms.some(term=>clean===term||clean.includes(term)));
+  if(therapy)return {company:therapy.company,programId:therapy.programId};
   const exactCompany=companyNames().find(n=>n.toLowerCase()===clean);
   if(exactCompany)return {company:exactCompany,programId:"__all__"};
   const exactProgram=PROG.find(p=>p.name.toLowerCase()===clean||p.id.toLowerCase()===clean);
